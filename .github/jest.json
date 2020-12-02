@@ -8,10 +8,11 @@
           "file": 1
         },
         {
-          "regexp":"^\"jest:(\\d+):(\\d+):(.*)\"$",
-          "line": 1,
-          "column": 2,
-          "message": 3,
+          "regexp":"^::(error) file=([^,].*)line=(\\d+),col=(\\d+)::(.*)$",
+          "severity": 1,
+          "file": 2,
+          "column": 3,
+          "message": 4,
           "loop": true
         }
       ]
