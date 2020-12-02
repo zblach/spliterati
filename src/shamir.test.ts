@@ -1,13 +1,12 @@
 // @ts-ignore
 import { Shamir } from './shamir.ts';
-// import { describe } from 'jest';
-// import {describe, test, expect} from 'ts-jest';
 
 /*
     const util = require('util')
     let te = new util.TextEncoder()
     let td = new util.TextDecoder()
  */
+
 describe('split', () => {
   const knownSecret = Uint8Array.of(0x68, 0x65, 0x6c, 0x6c, 0x6f);
   test('split test', () => {
