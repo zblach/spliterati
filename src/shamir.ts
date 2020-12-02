@@ -154,7 +154,7 @@ class Polynomial {
     let result: uint8 = 0;
     let basis: uint8 = 0;
 
-    if (xs.length != ys.length) {
+    if (xs.length !== ys.length) {
       throw new SyntaxError('xs.length != ys.length');
     }
     const limit = xs.length;
