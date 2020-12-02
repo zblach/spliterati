@@ -1,16 +1,21 @@
-name: Jest
+name: yarn jest
 
-on:
-  push:
-    branches: [main]
+on: [push]
 
 jobs:
-  test:
+  build:
+
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [15.3.x]
+
     steps:
-      - name: get repo
-        uses: actions/checkout@v2
-      - name: yarn
-        run: yarn
-      - name: Run Tests
-        run: jest test
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn install --dev
+      - run: yarn jest
