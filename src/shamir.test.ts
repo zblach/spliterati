@@ -42,7 +42,7 @@ describe('split', () => {
 describe('combine', () => {
   // 'hello', 5, 3
   const knownSecret = Uint8Array.of(0x68, 0x65, 0x6c, 0x6c, 0x6f);
-  const knownShare = [
+  const knownShares = [
     Uint8Array.of(0xe7, 0xa3, 0xc6, 0xab, 0xde, 0x58),
     Uint8Array.of(0xc1, 0xf2, 0x5f, 0x83, 0x62, 0x7a),
     Uint8Array.of(0xd5, 0xf0, 0x58, 0x2a, 0xf1, 0x74),
@@ -51,35 +51,35 @@ describe('combine', () => {
   ];
 
   describe('golang shares (3/5)', () => {
-    test('0..3', () => {
+    test('0..2', () => {
       expect(
-        Shamir.combine(knownShare.slice(0, 3)),
+        Shamir.combine(knownShares.slice(0, 3)),
       ).toEqual(knownSecret);
     });
-    test('1..4', () => {
+    test('1..3', () => {
       expect(
-        Shamir.combine(knownShare.slice(1, 4)),
+        Shamir.combine(knownShares.slice(1, 4)),
       ).toEqual(knownSecret);
     });
-    test('2..5', () => {
+    test('2..4', () => {
       expect(
-        Shamir.combine(knownShare.slice(2)),
+        Shamir.combine(knownShares.slice(2)),
       ).toEqual(knownSecret);
     });
     test('4, 2, 0', () => {
       expect(
-        Shamir.combine([knownShare[4], knownShare[2], knownShare[0]]),
+        Shamir.combine([knownShares[4], knownShares[2], knownShares[0]]),
       ).toEqual(knownSecret);
     });
   });
   test('golang shares (5/5)', () => {
     expect(
-      Shamir.combine(knownShare),
+      Shamir.combine(knownShares),
     ).toEqual(knownSecret);
   });
 
   test('golang shares (2/5)', () => {
-    const reassembled = Shamir.combine(knownShare.slice(0, 2));
+    const reassembled = Shamir.combine(knownShares.slice(0, 2));
     expect(reassembled).toHaveLength(5);
     expect(reassembled).not.toEqual(knownSecret);
   });
@@ -91,7 +91,7 @@ describe('combine', () => {
   });
   test('single share to fail', () => {
     expect(() => {
-      Shamir.combine([knownShare[0]]);
+      Shamir.combine([knownShares[0]]);
     }).toThrow(SyntaxError);
   });
   test('duplicate x shares to fail', () => {

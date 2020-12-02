@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: get repo
         uses: actions/checkout@v2
-      - name: npm install
-        run: npm install
+      - name: yarn
+        run: yarn
       - name: Run Tests
         run: jest test
