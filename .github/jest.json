@@ -8,8 +8,7 @@
           "severity": 1,
           "file": 2,
           "column": 3,
-          "message": 4,
-          "loop": true
+          "message": 4
         }
       ]
     }
