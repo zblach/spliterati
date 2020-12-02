@@ -1,0 +1,114 @@
+// @ts-ignore
+import { Shamir } from './shamir.ts';
+// import { describe } from 'jest';
+// import {describe, test, expect} from 'ts-jest';
+
+/*
+    const util = require('util')
+    let te = new util.TextEncoder()
+    let td = new util.TextDecoder()
+ */
+describe('split', () => {
+  const knownSecret = Uint8Array.of(0x68, 0x65, 0x6c, 0x6c, 0x6f);
+  test('split test', () => {
+    const shares = Shamir.split(knownSecret, 5, 3);
+    expect(shares).toHaveLength(5);
+    shares.forEach((share) => {
+      expect(share).toHaveLength(6);
+    });
+  });
+
+  test('too few shares', () => {
+    expect(() => {
+      Shamir.split(knownSecret, 1, 1);
+    }).toThrow(SyntaxError);
+  });
+  test('too many shares', () => {
+    expect(() => {
+      Shamir.split(knownSecret, 255, 5);
+    }).toThrow(SyntaxError);
+  });
+  test('t > n', () => {
+    expect(() => {
+      Shamir.split(knownSecret, 3, 5);
+    }).toThrow(SyntaxError);
+  });
+  test('no data', () => {
+    expect(() => {
+      Shamir.split(Uint8Array.of(), 3, 5);
+    }).toThrow(SyntaxError);
+  });
+});
+
+describe('combine', () => {
+  // 'hello', 5, 3
+  const knownSecret = Uint8Array.of(0x68, 0x65, 0x6c, 0x6c, 0x6f);
+  const knownShare = [
+    Uint8Array.of(0xe7, 0xa3, 0xc6, 0xab, 0xde, 0x58),
+    Uint8Array.of(0xc1, 0xf2, 0x5f, 0x83, 0x62, 0x7a),
+    Uint8Array.of(0xd5, 0xf0, 0x58, 0x2a, 0xf1, 0x74),
+    Uint8Array.of(0x71, 0x47, 0x25, 0x86, 0x35, 0x8b),
+    Uint8Array.of(0x6b, 0xbe, 0x70, 0x7b, 0xf4, 0xc3),
+  ];
+
+  describe('golang shares (3/5)', () => {
+    test('0..3', () => {
+      expect(
+        Shamir.combine(knownShare.slice(0, 3)),
+      ).toEqual(knownSecret);
+    });
+    test('1..4', () => {
+      expect(
+        Shamir.combine(knownShare.slice(1, 4)),
+      ).toEqual(knownSecret);
+    });
+    test('2..5', () => {
+      expect(
+        Shamir.combine(knownShare.slice(2)),
+      ).toEqual(knownSecret);
+    });
+    test('4, 2, 0', () => {
+      expect(
+        Shamir.combine([knownShare[4], knownShare[2], knownShare[0]]),
+      ).toEqual(knownSecret);
+    });
+  });
+  test('golang shares (5/5)', () => {
+    expect(
+      Shamir.combine(knownShare),
+    ).toEqual(knownSecret);
+  });
+
+  test('golang shares (2/5)', () => {
+    const reassembled = Shamir.combine(knownShare.slice(0, 2));
+    expect(reassembled).toHaveLength(5);
+    expect(reassembled).not.toEqual(knownSecret);
+  });
+
+  test('no shares to fail', () => {
+    expect(() => {
+      Shamir.combine([]);
+    }).toThrow(SyntaxError);
+  });
+  test('single share to fail', () => {
+    expect(() => {
+      Shamir.combine([knownShare[0]]);
+    }).toThrow(SyntaxError);
+  });
+  test('duplicate x shares to fail', () => {
+    expect(() => {
+      Shamir.combine([
+        Uint8Array.of(0x01, 0x02, 0x10),
+        Uint8Array.of(0x03, 0x04, 0x10),
+      ]);
+    }).toThrow(SyntaxError);
+  });
+  test('mismatched shard lengths to fail', () => {
+    expect(() => {
+      Shamir.combine([
+        Uint8Array.of(0x01, 0x02, 0x03),
+        Uint8Array.of(0x04, 0x05),
+      ]);
+    }).toThrow(SyntaxError);
+  });
+});
