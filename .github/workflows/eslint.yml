@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: wire-up problem matchers
-        run: echo "::add-matcher::eslint-stylish.json"
+        run: echo "::add-matcher::.github/eslint-stylish.json"
       - name: node.js[${{ matrix.node-version }}]
         uses: actions/setup-node@v1
         with:
