@@ -19,4 +19,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: yarn install --dev
       - run: echo "::add-matcher::.github/eslint-stylish.json"
+        name: enabling eslint problem matcher
       - run: yarn eslint -f compact src/**/*.ts
+        name: eslint machine output

@@ -18,5 +18,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install --dev
-      - run: echo "::add-matcher::.github/jest.json"
-      - run: yarn -s jest --json --testLocationInResults | jq -e '.testResults | .[].assertionResults | map(select(.status != "passed")) | .[] | "jest:\(.location.line):\(.location.column):\(.failureMessages | .[])"'
+      - name: enabling yarn problem matcher
+        run: echo "::add-matcher::.github/jest.json"
+      - name: yarn machine output
+        run: yarn --silent jest --json --testLocationInResults 2>/dev/null | jq -e -M '.testResults | .[].assertionResults | map(select(.status != "passed")) | .[] | "jest:\(.location.line):\(.location.column):\(.failureMessages | .[])"'

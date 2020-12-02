@@ -8,7 +8,7 @@
           "file": 1
         },
         {
-          "regexp":"^\"jest:\\s+(\\d+):(\\d+):(.*)\"$",
+          "regexp":"^\"jest:(\\d+):(\\d+):(.*)\"$",
           "line": 1,
           "column": 2,
           "message": 3,
