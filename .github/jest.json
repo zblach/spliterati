@@ -4,11 +4,12 @@
       "owner": "yarn-test",
       "pattern": [
         {
-          "regexp":"^::(error) file=([^,].*)line=(\\d+),col=(\\d+)::(.*)$",
+          "regexp":"^::(error|warning)\\s+file=([^,].*)line=(\\d+),col=(\\d+)::(.*)$",
           "severity": 1,
           "file": 2,
           "column": 3,
-          "message": 4
+          "message": 4,
+          "loop": true
         }
       ]
     }
