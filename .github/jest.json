@@ -4,10 +4,6 @@
       "owner": "yarn-test",
       "pattern": [
         {
-          "regexp": "([^\\s].*)$",
-          "file": 1
-        },
-        {
           "regexp":"^::(error) file=([^,].*)line=(\\d+),col=(\\d+)::(.*)$",
           "severity": 1,
           "file": 2,
