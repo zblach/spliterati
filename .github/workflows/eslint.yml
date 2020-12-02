@@ -11,13 +11,13 @@ jobs:
       matrix:
         node-version: [15.3.x]
 
-  steps:
-    - uses: actions/checkout@v2
-    - name: wire-up problem matchers
-      run: echo "::add-matcher::eslint-stylish.json"
-    - name: node.js[${{ matrix.node-version }}]
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: yarn install --dev
-    - run: yarn eslint -f compact
+    steps:
+      - uses: actions/checkout@v2
+      - name: wire-up problem matchers
+        run: echo "::add-matcher::eslint-stylish.json"
+      - name: node.js[${{ matrix.node-version }}]
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn install --dev
+      - run: yarn eslint -f compact
