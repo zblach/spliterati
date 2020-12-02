@@ -4,15 +4,15 @@ on: [push]
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [ 15.3.x ]
+        node-version: [15.3.x]
 
   steps:
     - uses: actions/checkout@v2
-    - uses: actions/toolkit
     - name: wire-up problem matchers
       run: echo "::add-matcher::eslint-stylish.json"
     - name: node.js[${{ matrix.node-version }}]
