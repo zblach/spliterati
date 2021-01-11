@@ -1,0 +1,31 @@
+{
+  "name": "shamir",
+  "version": "0.2.0",
+  "description": "Arbitrary-length shamir implementation",
+  "keywords": [
+    "shamir",
+    "secret",
+    "sharing",
+    "threshold"
+  ],
+  "author": "Zak Blacher <zblach@The-Cloud.local>",
+  "homepage": "",
+  "license": "MPL-2.0",
+  "main": "lib/shamir.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@types/node": "^14.14.20"
+  }
+}
