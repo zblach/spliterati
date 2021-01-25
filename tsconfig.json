@@ -30,7 +30,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
-		"noEmit": true,
+		"noEmit": false,
 		"sourceMap": true,
 		"removeComments": true,
 		"downlevelIteration": true,

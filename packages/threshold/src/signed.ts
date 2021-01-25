@@ -1,8 +1,8 @@
 import * as nacl from 'tweetnacl';
 import { randomBytes } from 'crypto';
 import { Slicer, Uint8ArrayEqual } from './util';
-import { uint8 } from '../../../dist/uint8';
-import { Shamir } from '../../../dist/shamir';
+import { uint8 } from '../../shamir/src/uint8';
+import { Shamir } from '../../shamir/src/shamir';
 
 /**
  * The 'Signed' module wraps the Shamir library. It generates a random ed25519 keypair, and signs the shares with
@@ -92,7 +92,6 @@ export module Signed {
       }
 
       const shards: Uint8Array[] = [];
-      const shares: Uint8Array[] = [];
 
       Shamir.split(keys.secretKey, n, t).forEach((share: Uint8Array) => {
         shards.push(
@@ -101,14 +100,7 @@ export module Signed {
             keys.secretKey,
           ),
         );
-        shares.push(share);
       });
-
-      // test reassembly
-      const reassembled = Shamir.combine(shares);
-      if (!Uint8ArrayEqual(keys.secretKey, reassembled)) {
-        throw new CryptoError('reassembly failed');
-      }
 
       return {
         publicKey: keys.publicKey,
@@ -157,8 +149,6 @@ export module Signed {
         }
         shares.push(shard.share);
       });
-
-      console.log(shares);
 
       const keyPair = nacl.sign.keyPair.fromSecretKey(Shamir.combine(shares));
       // validate private key reassembly by test-signing a message and validating it with the provided public key.

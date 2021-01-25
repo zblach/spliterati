@@ -1,6 +1,6 @@
-import { randomInt } from 'crypto';
+import { randomBytes } from 'crypto';
 import type { uint8 } from './uint8';
-// import takeNRandom from './util';
+import takeNRandom from './util';
 
 /**
  * Operations over a Galois field of 2^8
@@ -92,7 +92,8 @@ export module GF2p8 {
   const div = (a: uint8, b: uint8): uint8 => {
     if (a === 0) {
       return 0;
-    } if (b === 0) {
+    }
+    if (b === 0) {
       throw new RangeError('div zero');
     }
 
@@ -112,11 +113,8 @@ export module GF2p8 {
      * @param {uint8} degree - the degree of the function
      */
     constructor(intercept: uint8, degree: uint8) {
-      this.coefficients = new Uint8Array(degree + 1);
+      this.coefficients = Uint8Array.of(...randomBytes(degree + 1));
       this.coefficients[0] = intercept;
-      for (let i = 1; i < this.coefficients.length; i++) {
-        this.coefficients[i] = <uint8>randomInt(1, 255);
-      }
     }
 
     /**
@@ -132,13 +130,13 @@ export module GF2p8 {
       }
 
       const degree: uint8 = <uint8>(this.coefficients.length - 1);
-      let out: uint8 = <uint8> this.coefficients[degree];
+      let out = this.coefficients[degree];
 
       for (let i = degree - 1; i >= 0; i--) {
-        out = add(mul(out, x), <uint8> this.coefficients[i]);
+        out = add(mul(<uint8>out, x), <uint8> this.coefficients[i]);
       }
 
-      return out;
+      return <uint8>out;
     }
 
     /**
@@ -203,15 +201,13 @@ export module Shamir {
     }
 
     const out: Uint8Array[] = [];
-    // const xs = takeNRandom(n, [...Array(254).keys()]); // 0 ... 254
-    const xs = new Uint8Array(n);
+    const xs = takeNRandom(n, [...Array(255).keys()]); // 0 ... 254
     for (let i = 0; i < n; i++) {
       out[i] = new Uint8Array(data.length + 1);
 
-      xs[i] = i + 1; // 1 ... 255
+      xs[i] += 1; // 1 ... 255
       out[i][data.length] = xs[i];
     }
-
     data.forEach((val, idx) => {
       const p = new GF2p8.Polynomial(<uint8>val, <uint8>(t - 1));
       xs.forEach((x, i) => {

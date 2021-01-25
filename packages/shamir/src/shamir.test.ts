@@ -1,5 +1,5 @@
 import { randomBytes, randomInt } from 'crypto';
-import { Shamir } from './shamir';
+import { GF2p8, Shamir } from './shamir';
 import type { uint8 } from './uint8';
 import takeNRandom from './util';
 
@@ -51,6 +51,16 @@ describe('split', () => {
     expect(() => {
       Shamir.split(Uint8Array.of(), 3, 5);
     }).toThrow(SyntaxError);
+  });
+
+  test('assembly', () => {
+    const foo = GF2p8.Polynomial.interpolate(
+      Uint8Array.of(1, 2, 3, 4, 5),
+      Uint8Array.of(146, 63, 42, 146, 130),
+      0,
+    );
+
+    expect(foo).toEqual(63);
   });
 });
 
