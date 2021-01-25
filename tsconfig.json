@@ -2,7 +2,8 @@
 	"baseUrl": "./packages",
 	"compilerOptions": {
 		"declaration": true,
-		"outDir": "./dist",
+		"rootDir": "src",
+		"outDir": "dist",
 		"plugins": [
 			{
 				"name": "@babel/plugin-syntax-jsx"
@@ -41,7 +42,8 @@
 		"packages/*/lib/**/*"
 	],
 	"exclude": [
-		"dist"
+		"dist",
+		"node_modules"
 	],
 	"references": [
 		{"path":  "packages/shamir"},

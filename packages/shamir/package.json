@@ -8,17 +8,10 @@
     "sharing",
     "threshold"
   ],
-  "author": "Zak Blacher <zblach@The-Cloud.local>",
+  "author": "Zak Blacher <zblach@github>",
   "homepage": "",
   "license": "MPL-2.0",
   "main": "lib/shamir.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"
   },

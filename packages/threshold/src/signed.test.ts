@@ -1,7 +1,7 @@
 import * as nacl from 'tweetnacl';
 import { randomBytes, randomInt } from 'crypto';
+import { uint8 } from '@spliterati/shamir/src/uint8';
 import { Signed } from './signed';
-import { uint8 } from '../../shamir/src/uint8';
 
 describe('test', () => {
   test('roundtrip', () => {
@@ -12,15 +12,10 @@ describe('test', () => {
     const pub = nacl.sign.keyPair.fromSecretKey(pk);
     nacl.sign.open(<Uint8Array>res.signedMessage, pub.publicKey);
   });
-  test('key consistency', () => {
-    const keypair = nacl.sign.keyPair();
-    const pub2 = nacl.sign.keyPair.fromSecretKey(keypair.secretKey);
-    expect(pub2.publicKey).toEqual(keypair.publicKey);
-  });
 
   describe('shard tests', () => {
     test('pack', () => {
-      const keyID = Uint8Array.of(...randomBytes(Signed.KEYID_LENGTH));
+      const keyID = Uint8Array.of(...randomBytes(Signed.Shard.KEYID_LENGTH));
       const t = <uint8> randomInt(0, 255);
       const n = <uint8> randomInt(0, 255);
       const data = Uint8Array.of(...randomBytes(randomInt(2, 48)));
