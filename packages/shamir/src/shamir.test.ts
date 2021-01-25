@@ -1,34 +1,26 @@
+import { randomBytes, randomInt } from 'crypto';
 import { Shamir } from './shamir';
-import type {uint8} from './uint8';
-import {randomInt, randomBytes} from "crypto";
-
-function takeNRandom<T>(n: number, elements: T[]): T[] {
-  if (n > elements.length) {
-    throw new SyntaxError("cannot take more elements than there are")
-  }
-  const shuf = [...elements].sort(() => 0.5 - Math.random())
-  return shuf.slice(0, n);
-}
+import type { uint8 } from './uint8';
+import takeNRandom from './util';
 
 describe.skip('iterative roundtrip', () => {
   return; // remove to run these tests -- `describe.skip` will still generate skipped output for ${TEST_COUNT} cases.
   const TEST_COUNT = 5000;
-  const iter = (t: uint8, n: uint8) => {
-    return () => {
-      const secret = Uint8Array.from(randomBytes(24));
-      const shares = Shamir.split(secret, n, t)
+  const iter = (k: uint8, t: uint8, n: uint8) => () => {
+    const secret = Uint8Array.from(randomBytes(randomInt(1, 64)));
+    const shares = Shamir.split(secret, n, t);
 
-      const recombine = Shamir.combine(takeNRandom(t == n ? t : randomInt(t, n), shares))
-      expect(secret).toEqual(recombine)
-    }
-  }
-  for(let i = 0; i < TEST_COUNT; i++) {
-    const t = <uint8>randomInt(2, 254)
+    const recombine = Shamir.combine(takeNRandom(k, shares));
+    expect(secret).toEqual(recombine);
+  };
+  for (let i = 0; i < TEST_COUNT; i++) {
+    const t = <uint8>randomInt(2, 254);
     const n = <uint8>randomInt(t, 255);
+    const k = <uint8>(t == n ? t : randomInt(t, n));
 
-    test(`test ${i}: ${t} of ${n}`, iter(t, n))
+    test(`test ${i}: ${k} of ${t} of ${n}`, iter(k, t, n));
   }
-})
+});
 
 describe('split', () => {
   const knownSecret = Uint8Array.of(0x68, 0x65, 0x6c, 0x6c, 0x6f);

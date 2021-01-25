@@ -1,12 +1,12 @@
-/* eslint-disable no-plusplus */
+import { randomInt } from 'crypto';
 import type { uint8 } from './uint8';
-import {randomBytes} from 'crypto';
+// import takeNRandom from './util';
 
 /**
  * Operations over a Galois field of 2^8
  */
 export module GF2p8 {
-  const field = 2**8;
+  const field = 2 ** 8;
 
   const logTable: uint8[] = [
     0x00, 0xff, 0xc8, 0x08, 0x91, 0x10, 0xd0, 0x36,
@@ -40,7 +40,7 @@ export module GF2p8 {
     0x22, 0x88, 0x94, 0xce, 0x19, 0x01, 0x71, 0x4c,
     0xa5, 0xe3, 0xc5, 0x31, 0xbb, 0xcc, 0x1f, 0x2d,
     0x3b, 0x52, 0x6f, 0xf6, 0x2e, 0x89, 0xf7, 0xc0,
-    0x68, 0x1b, 0x64, 0x04, 0x06, 0xbf, 0x83, 0x38
+    0x68, 0x1b, 0x64, 0x04, 0x06, 0xbf, 0x83, 0x38,
   ];
 
   const expTable: uint8[] = [
@@ -75,26 +75,24 @@ export module GF2p8 {
     0x1e, 0xd3, 0x49, 0xe9, 0x9c, 0xc8, 0xc6, 0xc7,
     0x22, 0x6e, 0xdb, 0x20, 0xbf, 0x43, 0x51, 0x52,
     0x66, 0xb2, 0x76, 0x60, 0xda, 0xc5, 0xf3, 0xf6,
-    0xaa, 0xcd, 0x9a, 0xa0, 0x75, 0x54, 0x0e, 0x01
+    0xaa, 0xcd, 0x9a, 0xa0, 0x75, 0x54, 0x0e, 0x01,
   ];
 
-  const add = (a: uint8, b: uint8): uint8 => {
-    // eslint-disable-next-line no-bitwise
-    return <uint8>(a ^ b);
-  }
+  // eslint-disable-next-line no-bitwise
+  const add = (a: uint8, b: uint8): uint8 => <uint8>(a ^ b);
 
   const mul = (a: uint8, b: uint8): uint8 => {
-    if (a == 0 || b == 0) {
+    if (a === 0 || b === 0) {
       return 0;
     }
     const sum = (logTable[a] + logTable[b]) % (field - 1);
     return expTable[sum];
-  }
+  };
 
   const div = (a: uint8, b: uint8): uint8 => {
-    if (a == 0) {
+    if (a === 0) {
       return 0;
-    } else if (b == 0) {
+    } if (b === 0) {
       throw new RangeError('div zero');
     }
 
@@ -102,7 +100,7 @@ export module GF2p8 {
     const diff = ((logTable[a] - logTable[b]) + fm1) % fm1;
 
     return expTable[diff];
-  }
+  };
 
   export class Polynomial {
     private readonly coefficients: Uint8Array; // [0] = x intercept
@@ -114,8 +112,11 @@ export module GF2p8 {
      * @param {uint8} degree - the degree of the function
      */
     constructor(intercept: uint8, degree: uint8) {
-      this.coefficients = new Uint8Array(randomBytes(degree+1));
+      this.coefficients = new Uint8Array(degree + 1);
       this.coefficients[0] = intercept;
+      for (let i = 1; i < this.coefficients.length; i++) {
+        this.coefficients[i] = <uint8>randomInt(1, 255);
+      }
     }
 
     /**
@@ -127,14 +128,14 @@ export module GF2p8 {
      */
     evaluate(x: uint8): uint8 {
       if (x === 0) {
-        return <uint8>this.coefficients[0];
+        return <uint8> this.coefficients[0];
       }
 
       const degree: uint8 = <uint8>(this.coefficients.length - 1);
-      let out: uint8 = <uint8>this.coefficients[degree];
+      let out: uint8 = <uint8> this.coefficients[degree];
 
       for (let i = degree - 1; i >= 0; i--) {
-        out = add(mul(out, x), <uint8>this.coefficients[i]);
+        out = add(mul(out, x), <uint8> this.coefficients[i]);
       }
 
       return out;
@@ -156,16 +157,16 @@ export module GF2p8 {
       if (xs.length !== ys.length) {
         throw new SyntaxError('xs.length != ys.length');
       }
-      const limit = xs.length;
+      const pairCount = xs.length;
 
-      for (let i = 0; i < limit; i++) {
+      for (let i = 0; i < pairCount; i++) {
         basis = 1;
-        for (let j = 0; j < limit; j++) {
-          if (i == j) {
+        for (let j = 0; j < pairCount; j++) {
+          if (i === j) {
             // eslint-disable-next-line no-continue
             continue;
           }
-          basis = mul(basis, div(add(x, <uint8>xs[j]), add(<uint8>xs[i], <uint8>xs[j])))
+          basis = mul(basis, div(add(x, <uint8>xs[j]), add(<uint8>xs[i], <uint8>xs[j])));
         }
         result = add(result, mul(<uint8>ys[i], basis));
       }
@@ -202,11 +203,12 @@ export module Shamir {
     }
 
     const out: Uint8Array[] = [];
+    // const xs = takeNRandom(n, [...Array(254).keys()]); // 0 ... 254
     const xs = new Uint8Array(n);
     for (let i = 0; i < n; i++) {
       out[i] = new Uint8Array(data.length + 1);
 
-      xs[i] = i + 1; // TODO: random unique values for x intercepts?
+      xs[i] = i + 1; // 1 ... 255
       out[i][data.length] = xs[i];
     }
 
@@ -238,7 +240,7 @@ export module Shamir {
     const expectedLen = shares[0].length;
     shares.slice(1).forEach((share) => {
       if (share.length !== expectedLen) {
-        throw new SyntaxError('unequal shard lengths');
+        throw new SyntaxError('unequal share lengths');
       }
     });
 

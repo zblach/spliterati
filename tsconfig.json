@@ -1,11 +1,40 @@
 {
+	"baseUrl": "./packages",
 	"compilerOptions": {
-		"module": "commonjs",
-		"target": "es2020",
 		"declaration": true,
 		"outDir": "./dist",
+		"plugins": [
+			{
+				"name": "@babel/plugin-syntax-jsx"
+			}
+		],
+		"target": "es2020",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"strict": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"strictBindCallApply": true,
+		"strictPropertyInitialization": true,
+		"noImplicitThis": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
 		"sourceMap": true,
-		"strict": true
+		"removeComments": true,
+		"downlevelIteration": true,
+		"jsx": "preserve"
 	},
 	"include": [
 		"packages/*/src/**/*",
@@ -13,5 +42,9 @@
 	],
 	"exclude": [
 		"dist"
+	],
+	"references": [
+		{"path":  "packages/shamir"},
+		{"path":  "packages/threshold"}
 	]
 }
