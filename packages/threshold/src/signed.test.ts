@@ -1,7 +1,7 @@
 import * as nacl from 'tweetnacl';
 import { randomBytes, randomInt } from 'crypto';
-import { uint8 } from '@spliterati/shamir/src/uint8';
 import { Signed } from './signed';
+import { uint8 } from '../../uint8/src/uint8';
 
 describe('test', () => {
   test('roundtrip', () => {

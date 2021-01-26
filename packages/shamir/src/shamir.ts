@@ -1,6 +1,6 @@
 import { randomBytes } from 'crypto';
-import type { uint8 } from './uint8';
-import takeNRandom from './util';
+import { uint8 } from '../../uint8/src/uint8';
+import takeNRandom from '../../utils/src/util';
 
 /**
  * Operations over a Galois field of 2^8

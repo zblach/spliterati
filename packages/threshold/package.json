@@ -1,18 +1,14 @@
 {
+  "type": "commonjs",
+  "exports": {
+    "./": "./src/"
+  },
   "name": "@spliterati/threshold",
   "version": "0.1.1",
   "description": "Generate a threshold-protected keypair",
   "author": "Zak Blacher",
-  "homepage": "",
+  "homepage": "https://github.com/zblach/spliterati",
   "license": "Unlicense",
-  "main": "lib/threshold.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"
   },

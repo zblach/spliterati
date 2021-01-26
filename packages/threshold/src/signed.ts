@@ -1,7 +1,7 @@
 import * as nacl from 'tweetnacl';
-import { uint8 } from '@spliterati/shamir/src/uint8';
-import { Shamir } from '@spliterati/shamir/src/shamir';
-import { Slicer, Uint8ArrayEqual } from './util';
+import { Slicer, Uint8ArrayEqual } from '../../utils/src/util';
+import { uint8 } from '../../uint8/src/uint8';
+import { Shamir } from '../../shamir/src/shamir';
 
 /**
  * The 'Signed' module wraps the Shamir library. It generates a random ed25519 keypair, and signs the shares with
@@ -51,13 +51,13 @@ export module Signed {
         throw new SyntaxError('share invalid -- too short');
       }
 
-      const slicer = new Slicer();
+      const slicer = new Slicer(bytes);
 
       return new Shard(
-        <Uint8Array>bytes.slice(...slicer.nextRange(Shard.KEYID_LENGTH)),
-              <uint8>bytes[slicer.next()],
-              <uint8>bytes[slicer.next()],
-              <Uint8Array>bytes.slice(slicer.next()),
+        slicer.next(Shard.KEYID_LENGTH),
+        <uint8>slicer.next(),
+        <uint8>slicer.next(),
+        slicer.next('end'),
       );
     }
 

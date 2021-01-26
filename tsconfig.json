@@ -2,8 +2,8 @@
 	"baseUrl": "./packages",
 	"compilerOptions": {
 		"declaration": true,
-		"rootDir": "src",
-		"outDir": "dist",
+		"rootDir": ".",
+		"outDir": "./dist",
 		"plugins": [
 			{
 				"name": "@babel/plugin-syntax-jsx"
@@ -35,11 +35,16 @@
 		"sourceMap": true,
 		"removeComments": true,
 		"downlevelIteration": true,
-		"jsx": "preserve"
+		"jsx": "preserve",
+		"baseUrl": "packages",
+		"paths": {
+			"@spliterati/*" : [
+				"*/src/"
+			]
+		}
 	},
 	"include": [
 		"packages/*/src/**/*",
-		"packages/*/lib/**/*"
 	],
 	"exclude": [
 		"dist",
@@ -47,6 +52,8 @@
 	],
 	"references": [
 		{"path":  "packages/shamir"},
-		{"path":  "packages/threshold"}
-	]
+		{"path":  "packages/threshold"},
+		{"path":  "packages/uint8"},
+		{"path":  "packages/utils"}
+	],
 }

@@ -3,27 +3,24 @@
   "exports": {
     "./": "./src/"
   },
-  "name": "@spliterati/shamir",
-  "version": "0.2.1",
-  "description": "Arbitrary-length shamir implementation",
+  "name": "@spliterati/uint8",
+  "version": "1.0.0",
+  "description": "A uint8 type definition",
   "keywords": [
-    "shamir",
-    "secret",
-    "sharing",
-    "threshold"
+    "uint8"
   ],
   "author": "Zak Blacher <zblach@github>",
   "homepage": "https://github.com/zblach/spliterati",
-  "license": "MPL-2.0",
-  "main": "lib/shamir.js",
+  "license": "MIT",
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zblach/spliterati.git"
+  },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
-  },
-  "dependencies": {
-    "@types/node": "^14.14.20"
   },
   "bugs": {
     "url": "https://github.com/zblach/spliterati/issues"
