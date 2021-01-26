@@ -91,7 +91,7 @@ export module Signed {
       shards: Uint8Array[],
       signedMessage: Uint8Array | null,
   } {
-    const keys = nacl.sign.keyPair();
+    const keys = nacl.box.keyPair();
     let keyID : Uint8Array;
     if (opts.keyID != null) {
       if (opts.keyID.length !== Shard.KEYID_LENGTH) {
@@ -104,11 +104,14 @@ export module Signed {
 
     const shards: Uint8Array[] = [];
 
+    // TODO: convert the box keypair into a sigining key
+    const signingKey = keys;
+
     Shamir.split(keys.secretKey, n, t).forEach((share: Uint8Array) => {
       shards.push(
         nacl.sign(
           new Shard(keyID, t, n, share).pack(),
-          keys.secretKey,
+          signingKey.secretKey,
         ),
       );
     });

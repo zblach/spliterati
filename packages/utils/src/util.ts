@@ -15,38 +15,38 @@ export function Uint8ArrayEqual(a: Uint8Array, b: Uint8Array): boolean {
   return a.every((val, i) => b[i] == val);
 }
 
+interface Sliceable<T> extends ArrayLike<T>{
+  slice(arg0?: number, arg1?: number): this;
+}
+type index = number | 'end'
 /**
  * Slicer is a utility class that keeps track of a slice index for repeated array cuts. It doesn't track array length.
  *
  * Say, for example, you have a Uint8Array that looks something like:
- *   aaaaaaaabbccccdeeee....
+ *   aaaaaaaabbccccdeffff....
  *
  * It's annoying to keep track of how far you've read manually, so you can decompose it as follows:
- *   const s = new Slicer(ex)
+ *   const s = new Slicer(ex);
  *
  *   const as = s.next(8); // 8 = the length of this particular section
  *   const bs = s.next(2);
  *   const cs = s.next(4);
- *   const d  = s.next();  // singular element.
- *   const es = s.next('end'); // until the end.
+ *   const ds = s.next(1); // array of length 1
+ *   const e  = s.next();  // singular element.
+ *   const fs = s.next('end'); // until the end.
  */
-// eslint-disable-next-line no-unused-vars
-export class Slicer<E, C extends {[index: number]: E; slice(arg0?: number, arg1?: number): C; length: number}> {
+export class Slicer<E, ES extends Sliceable<E>> {
   private index : number;
 
-  // eslint-disable-next-line no-unused-vars
-  constructor(private readonly data: C) {
+  constructor(private readonly data: ES) {
     this.index = 0;
   }
 
-  // eslint-disable-next-line no-unused-vars
   next(): E; // singular element
 
-  // eslint-disable-next-line no-dupe-class-members,no-unused-vars
-  next(amt: (number | 'end')): C; // slices of defined or indefinite length
+  next(amt: index): ES; // slices of defined or indefinite length
 
-  // eslint-disable-next-line no-dupe-class-members
-  next(amt? : (number | 'end')): (C | E) {
+  next(amt?: index): (ES | E) {
     let end: (number | undefined);
     switch (amt) {
       case undefined:
@@ -58,11 +58,7 @@ export class Slicer<E, C extends {[index: number]: E; slice(arg0?: number, arg1?
         break;
     }
     const slice = this.data.slice(this.index, end);
-    if (amt == 'end') {
-      this.index = this.data.length;
-    } else {
-      this.index += amt;
-    }
+    this.index = (amt == 'end' ? this.data.length : <number>end);
     return slice;
   }
 }

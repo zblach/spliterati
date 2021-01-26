@@ -21,5 +21,7 @@ module.exports = {
     eqeqeq: 'off',
     'no-plusplus': 'off',
     'max-len': ['error', { code: 120 }],
+    'no-unused-vars': 'off',
+    'no-dupe-class-members': 'off',
   },
 };

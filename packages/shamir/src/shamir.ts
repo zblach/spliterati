@@ -6,7 +6,7 @@ import takeNRandom from '../../utils/src/util';
  * Operations over a Galois field of 2^8
  */
 export module GF2p8 {
-  const field = 2 ** 8;
+  export const FIELD = 2 ** 8;
 
   const logTable: uint8[] = [
     0x00, 0xff, 0xc8, 0x08, 0x91, 0x10, 0xd0, 0x36,
@@ -85,7 +85,7 @@ export module GF2p8 {
     if (a === 0 || b === 0) {
       return 0;
     }
-    const sum = (logTable[a] + logTable[b]) % (field - 1);
+    const sum = (logTable[a] + logTable[b]) % (FIELD - 1);
     return expTable[sum];
   };
 
@@ -97,7 +97,7 @@ export module GF2p8 {
       throw new RangeError('div zero');
     }
 
-    const fm1 = field - 1;
+    const fm1 = FIELD - 1;
     const diff = ((logTable[a] - logTable[b]) + fm1) % fm1;
 
     return expTable[diff];
@@ -184,7 +184,7 @@ export module Shamir {
    * @param {uint8}         n - the total number of shares
    * @param {uint8}         t - the minimum number of shares required for reassembly
    *
-   * @return {Uint8Array[]}   - the shares (in the form of (...y[0:len(data)], x), for x in (0..n))
+   * @return {Uint8Array[n]}  - the shares (in the form of (...y[0:len(data)], x), for unique x in (1..255))
    */
   export function split(data: Uint8Array, n: uint8, t: uint8): Uint8Array[] {
     if (t > n) {
@@ -196,12 +196,12 @@ export module Shamir {
     if (data.length === 0) {
       throw new SyntaxError('data required for split');
     }
-    if (n >= 255) {
+    if (n >= GF2p8.FIELD) {
       throw new SyntaxError('too many shares for this field');
     }
 
     const out: Uint8Array[] = [];
-    const xs = takeNRandom(n, [...Array(255).keys()]); // 0 ... 254
+    const xs = takeNRandom(n, [...Array(GF2p8.FIELD - 1).keys()]); // 0 ... 254
     for (let i = 0; i < n; i++) {
       out[i] = new Uint8Array(data.length + 1);
 

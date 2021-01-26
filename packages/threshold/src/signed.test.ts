@@ -1,16 +1,31 @@
 import * as nacl from 'tweetnacl';
+
 import { randomBytes, randomInt } from 'crypto';
 import { Signed } from './signed';
 import { uint8 } from '../../uint8/src/uint8';
 
+const sealedbox = require('tweetnacl-sealedbox-js');
+
 describe('test', () => {
   test('roundtrip', () => {
-    const res = Signed.generate(3, 5, { message: Uint8Array.of(5, 4, 3, 2, 1) });
+    const secretPayload = Uint8Array.of(...randomBytes(32));
+    const message = Uint8Array.of(...randomBytes(16));
 
+    // generate shares
+    const res = Signed.generate(3, 5, { message });
+
+    // validate message
+    expect(nacl.sign.open(res.signedMessage!, res.publicKey)).toEqual(message);
+
+    // encrypt local secret
+    const sb = sealedbox.seal(secretPayload, res.publicKey);
+
+    // reconstruct shares
     const pk = Signed.reconstruct(res.publicKey, res.shards);
+    const keyPair = nacl.sign.keyPair.fromSecretKey(pk);
 
-    const pub = nacl.sign.keyPair.fromSecretKey(pk);
-    nacl.sign.open(<Uint8Array>res.signedMessage, pub.publicKey);
+    // decrypt local secret
+    expect(sealedbox.open(sb, keyPair.publicKey, keyPair.secretKey)).toEqual(secretPayload);
   });
 
   describe('shard tests', () => {
