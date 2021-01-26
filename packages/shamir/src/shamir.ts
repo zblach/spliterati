@@ -196,7 +196,7 @@ export module Shamir {
     if (data.length === 0) {
       throw new SyntaxError('data required for split');
     }
-    if (n >= GF2p8.FIELD) {
+    if (n >= GF2p8.FIELD - 1) {
       throw new SyntaxError('too many shares for this field');
     }
 
