@@ -1,6 +1,6 @@
 {
   "name": "@spliterati/threshold",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Generate a threshold-protected keypair",
   "author": "Zak Blacher",
   "homepage": "",
