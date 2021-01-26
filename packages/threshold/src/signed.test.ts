@@ -2,7 +2,7 @@ import * as nacl from 'tweetnacl';
 
 import { randomBytes, randomInt } from 'crypto';
 import { Signed } from './signed';
-import { uint8 } from '../../uint8/src/uint8';
+import { uint8 } from '@spliterati/uint8/src/uint8';
 
 const sealedbox = require('tweetnacl-sealedbox-js');
 

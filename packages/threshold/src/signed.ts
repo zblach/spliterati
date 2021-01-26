@@ -1,8 +1,8 @@
 /* eslint-disable max-classes-per-file */
 import * as nacl from 'tweetnacl';
-import { Slicer, Uint8ArrayEqual } from '../../utils/src/util';
-import { uint8 } from '../../uint8/src/uint8';
-import { Shamir } from '../../shamir/src/shamir';
+import { Slicer, Uint8ArrayEqual } from '@spliterati/utils/src/util';
+import { uint8 } from '@spliterati/uint8/src/uint8';
+import { Shamir } from '@spliterati/shamir/src/shamir';
 
 /**
  * The 'Signed' module wraps the Shamir library. It generates a random ed25519 keypair, and signs the shares with
