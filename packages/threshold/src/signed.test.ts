@@ -15,14 +15,13 @@ describe('test', () => {
     const res = Signed.generate(3, 5, { message });
 
     // validate message
-    expect(nacl.sign.open(res.signedMessage!, res.publicKey)).toEqual(message);
+    expect(nacl.sign.open(res.signedMessage!, res.signingPublicKey)).toEqual(message);
 
     // encrypt local secret
-    const sb = sealedbox.seal(secretPayload, res.publicKey);
+    const sb = sealedbox.seal(secretPayload, res.encryptionPublicKey);
 
     // reconstruct shares
-    const pk = Signed.reconstruct(res.publicKey, res.shards);
-    const keyPair = nacl.sign.keyPair.fromSecretKey(pk);
+    const keyPair = Signed.reconstruct(res.signingPublicKey, res.shards);
 
     // decrypt local secret
     expect(sealedbox.open(sb, keyPair.publicKey, keyPair.secretKey)).toEqual(secretPayload);

@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import * as nacl from 'tweetnacl';
 import { Slicer, Uint8ArrayEqual } from '../../utils/src/util';
 import { uint8 } from '../../uint8/src/uint8';
@@ -86,12 +87,15 @@ export module Signed {
    * }
    */
   export function generate(t: uint8, n: uint8, opts: {message?:Uint8Array, keyID?:Uint8Array} = {}): {
-      publicKey: Uint8Array,
+      signingPublicKey: Uint8Array,
+      encryptionPublicKey: Uint8Array,
       keyID: Uint8Array,
       shards: Uint8Array[],
       signedMessage: Uint8Array | null,
   } {
-    const keys = nacl.box.keyPair();
+    const signingKeys = nacl.sign.keyPair();
+    const encryptionKeys = nacl.box.keyPair();
+
     let keyID : Uint8Array;
     if (opts.keyID != null) {
       if (opts.keyID.length !== Shard.KEYID_LENGTH) {
@@ -104,40 +108,38 @@ export module Signed {
 
     const shards: Uint8Array[] = [];
 
-    // TODO: convert the box keypair into a sigining key
-    const signingKey = keys;
-
-    Shamir.split(keys.secretKey, n, t).forEach((share: Uint8Array) => {
+    Shamir.split(encryptionKeys.secretKey, n, t).forEach((share: Uint8Array) => {
       shards.push(
         nacl.sign(
           new Shard(keyID, t, n, share).pack(),
-          signingKey.secretKey,
+          signingKeys.secretKey,
         ),
       );
     });
 
     return {
-      publicKey: keys.publicKey,
+      signingPublicKey: signingKeys.publicKey,
+      encryptionPublicKey: encryptionKeys.publicKey,
       keyID,
       shards,
-      signedMessage: opts.message ? nacl.sign(opts.message, keys.secretKey) : null,
+      signedMessage: opts.message ? nacl.sign(opts.message, signingKeys.secretKey) : null,
     };
   }
 
   /**
    * reconstruct reconstructs the private key from the given shards
    *
-   * @param publicKey - public key used to validate these shards and split material.
+   * @param signingPublicKey - public key used to validate the signatures of the generated shards.
    * @param shards - 2..n of the shards generated previously.
-   * @return nacl.sign.keyPair.secretKey (as a Uint8Array)
+   * @return nacl.BoxKeyPair - the key pair produced by re-assembling the input shards.
    */
-  export function reconstruct(publicKey: Uint8Array, shards: Uint8Array[]): Uint8Array {
+  export function reconstruct(signingPublicKey: Uint8Array, shards: Uint8Array[]): nacl.BoxKeyPair {
     if (shards.length < 2) {
       throw new SyntaxError('2 or more shards are required for reassembly');
     }
 
     // Validate and inspect the metadata, by extracting it from the first share, and comparing it to the rest of 'em.
-    const firstShard = Shard.unpack(nacl.sign.open(shards[0], publicKey));
+    const firstShard = Shard.unpack(nacl.sign.open(shards[0], signingPublicKey));
     if (firstShard == null) {
       throw new SignedError('could not verify share[0]');
     }
@@ -154,7 +156,7 @@ export module Signed {
     const shares: Uint8Array[] = [firstShard.share];
 
     shards.slice(1).forEach((signedShard: Uint8Array, index: number) => {
-      const shard = Shard.unpack(nacl.sign.open(signedShard, publicKey));
+      const shard = Shard.unpack(nacl.sign.open(signedShard, signingPublicKey));
       if (shard == null) {
         throw new CryptoError(`could not verify shard[${1 + index}]`);
       }
@@ -164,7 +166,6 @@ export module Signed {
       shares.push(shard.share);
     });
 
-    const keyPair = nacl.sign.keyPair.fromSecretKey(Shamir.combine(shares));
-    return keyPair.secretKey;
+    return nacl.box.keyPair.fromSecretKey(Shamir.combine(shares));
   }
 }
