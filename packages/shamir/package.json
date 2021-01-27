@@ -9,7 +9,7 @@
   },
   "type": "commonjs",
   "exports": {
-    "./": "./src/"
+    "./": "./src/shamir.ts"
   },
   "main": "./src/shamir.ts",
   "keywords": [
