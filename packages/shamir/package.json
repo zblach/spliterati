@@ -1,6 +1,6 @@
 {
   "name": "@spliterati/shamir",
-  "version": "0.3.3-alpha.5",
+  "version": "0.3.3-alpha.6",
   "description": "Arbitrary-length shamir implementation",
   "private": false,
   "main": "dist/bundle.js",
