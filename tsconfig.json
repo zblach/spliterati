@@ -43,10 +43,6 @@
 			]
 		}
 	},
-	"include": [
-		"packages/*/src/**/*",
-		"src/**/*",
-	],
 	"exclude": [
 		"dist",
 		"node_modules"

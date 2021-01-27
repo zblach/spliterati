@@ -1,5 +1,5 @@
 {
-  "name": "@spliterati/monorepo",
+  "name": "spliterati",
   "version": "independent",
   "main": "index.js",
   "repository": {
