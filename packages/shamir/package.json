@@ -41,5 +41,5 @@
     "ts-jest": "^26.4.4",
     "tweetnacl-sealedbox-js": "^1.2.0"
   },
-  "gitHead": "35742f79f1de1db301bd87aa46dd26ef95219d83"
+  "gitHead": "aecd73abb6a1650762b2e8be313c76d1cf24e30d"
 }
