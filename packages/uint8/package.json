@@ -10,7 +10,8 @@
     ".": "./src/uint8.ts"
   },
   "main": "./src/uint8.ts",
-  "version": "1.0.4-alpha.2",
+  "types": "./dist/uint8.d.ts",
+  "version": "1.0.4-alpha.3",
   "description": "A uint8 type definition",
   "keywords": [
     "uint8"

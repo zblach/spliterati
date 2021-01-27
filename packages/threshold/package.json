@@ -11,7 +11,8 @@
   "exports": {
     ".": "./src/signed.ts"
   },
-  "main": "./dist/bundle.js",
+  "main": "./src/signed.ts",
+  "types": "./dist/signed.d.ts",
   "author": "Zak Blacher",
   "homepage": "https://github.com/zblach/spliterati",
   "license": "Unlicense",

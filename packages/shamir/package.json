@@ -3,8 +3,8 @@
   "version": "0.3.3-alpha.9",
   "description": "Arbitrary-length shamir implementation",
   "private": false,
-  "main": "./dist/bundle.js",
-  "types": "./dist/bundle.d.ts",
+  "main": "./src/shamir.ts",
+  "types": "./dist/shamir.d.ts",
   "exports": {
     ".": "./src/shamir.ts"
   },
@@ -23,8 +23,7 @@
   "homepage": "https://github.com/zblach/spliterati",
   "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1",
-    "build": "webpack"
+    "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/zblach/spliterati/issues"
