@@ -7,7 +7,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "exports": {
-    "./": "./src/uint8.ts"
+    ".": "./src/uint8.ts"
   },
   "main": "./src/uint8.ts",
   "version": "1.0.4-alpha.1",

@@ -9,7 +9,7 @@
   "description": "Generate a threshold-protected keypair",
   "type": "commonjs",
   "exports": {
-    "./": "./src/signed.ts"
+    ".": "./src/signed.ts"
   },
   "author": "Zak Blacher",
   "homepage": "https://github.com/zblach/spliterati",
