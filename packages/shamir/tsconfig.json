@@ -1,9 +1,16 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "composite": true
+    "composite": true,
+    "downlevelIteration": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "declarationDir": "dist",
   },
   "include": [
     "src/**/*",
+  ],
+  "exclude": [
+    "src/**/*.test.ts",
   ]
 }

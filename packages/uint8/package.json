@@ -6,10 +6,11 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "exports": {
-    ".": "./src/uint8.ts"
-  },
-  "main": "./src/uint8.ts",
+  "main": "./dist/uint8.js",
+  "types": "./dist/uint8.d.ts",
+  "files": [
+    "dist"
+  ],
   "version": "1.0.4-alpha.2",
   "description": "A uint8 type definition",
   "keywords": [
@@ -25,11 +26,11 @@
   "bugs": {
     "url": "https://github.com/zblach/spliterati/issues"
   },
+  "scripts": {
+    "build": "rm -rf ./dist && tsc"
+  },
   "gitHead": "87272945e0d91ead29701e0e777eee99ce58e10b",
   "devDependencies": {
-    "ts-loader": "^8.0.14",
-    "tsconfig-paths-webpack-plugin": "^3.3.0",
-    "webpack": "^5.18.0",
-    "webpack-cli": "^4.4.0"
+    "ts-loader": "^8.0.14"
   }
 }

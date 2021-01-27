@@ -8,14 +8,17 @@
   },
   "description": "Generate a threshold-protected keypair",
   "type": "commonjs",
-  "exports": {
-    ".": "./src/signed.ts"
-  },
   "author": "Zak Blacher",
   "homepage": "https://github.com/zblach/spliterati",
   "license": "Unlicense",
+  "main": "./dist/threshold.js",
+  "types": "./dist/threshold.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "build": "rm -rf ./dist && tsc"
   },
   "dependencies": {
     "@spliterati/shamir": "^0.3.3-alpha.9",
@@ -27,10 +30,7 @@
   "devDependencies": {
     "eslint": "^7.18.0",
     "eslint-plugin-jest": "^24.1.3",
-    "ts-loader": "^8.0.14",
-    "tsconfig-paths-webpack-plugin": "^3.3.0",
-    "webpack": "^5.18.0",
-    "webpack-cli": "^4.4.0"
+    "ts-loader": "^8.0.14"
   },
   "gitHead": "87272945e0d91ead29701e0e777eee99ce58e10b"
 }
