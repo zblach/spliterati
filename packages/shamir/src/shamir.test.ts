@@ -1,7 +1,7 @@
 import { randomBytes, randomInt } from 'crypto';
-import { uint8 } from '@spliterati/uint8/src/uint8';
+import type { uint8 } from '@spliterati/uint8';
+import takeNRandom from '@spliterati/utils';
 import { GF2p8, Shamir } from './shamir';
-import takeNRandom from '@spliterati/utils/src/util';
 
 describe.skip('iterative roundtrip', () => {
   return; // remove to run these tests -- `describe.skip` will still generate skipped output for ${TEST_COUNT} cases.

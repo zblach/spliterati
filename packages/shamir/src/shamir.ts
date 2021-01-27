@@ -1,6 +1,6 @@
 import { randomBytes } from 'crypto';
-import { uint8 } from '@spliterati/uint8/src/uint8';
-import takeNRandom from '@spliterati/utils/src/util';
+import type { uint8 } from '@spliterati/uint8';
+import takeNRandom from '@spliterati/utils';
 
 /**
  * Operations over a Galois field of 2^8

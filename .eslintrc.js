@@ -6,6 +6,18 @@ module.exports = {
   extends: [
     'airbnb-base',
   ],
+  settings: {
+    'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
+
+  },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 12,
@@ -15,7 +27,7 @@ module.exports = {
     },
   },
   plugins: [
-    '@typescript-eslint',
+    '@typescript-eslint', 'import', 'prettier',
   ],
   rules: {
     eqeqeq: 'off',
@@ -23,5 +35,15 @@ module.exports = {
     'max-len': ['error', { code: 120 }],
     'no-unused-vars': 'off',
     'no-dupe-class-members': 'off',
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
   },
 };

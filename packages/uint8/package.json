@@ -1,9 +1,10 @@
 {
+  "name": "@spliterati/uint8",
   "type": "commonjs",
   "exports": {
     "./": "./src/"
   },
-  "name": "@spliterati/uint8",
+  "main": "./src/uint8.ts",
   "version": "1.0.0",
   "description": "A uint8 type definition",
   "keywords": [
@@ -19,23 +20,7 @@
     "type": "git",
     "url": "git+https://github.com/zblach/spliterati.git"
   },
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  },
   "bugs": {
     "url": "https://github.com/zblach/spliterati/issues"
-  },
-  "devDependencies": {
-    "@babel/plugin-syntax-jsx": "^7.12.1",
-    "@types/jest": "^26.0.20",
-    "@typescript-eslint/eslint-plugin": "^4.13.0",
-    "@typescript-eslint/parser": "^4.13.0",
-    "eslint": "^7.17.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1",
-    "jest": "^26.6.3",
-    "lerna": "^3.22.1",
-    "ts-jest": "^26.4.4",
-    "tweetnacl-sealedbox-js": "^1.2.0"
   }
 }

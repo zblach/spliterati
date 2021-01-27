@@ -45,6 +45,7 @@
 	},
 	"include": [
 		"packages/*/src/**/*",
+		"src/**/*",
 	],
 	"exclude": [
 		"dist",

@@ -1,8 +1,8 @@
 import * as nacl from 'tweetnacl';
 
 import { randomBytes, randomInt } from 'crypto';
+import type { uint8 } from '@spliterati/uint8';
 import { Signed } from './signed';
-import { uint8 } from '@spliterati/uint8/src/uint8';
 
 const sealedbox = require('tweetnacl-sealedbox-js');
 
@@ -21,10 +21,10 @@ describe('test', () => {
     const sb = sealedbox.seal(secretPayload, res.encryptionPublicKey);
 
     // reconstruct shares
-    const keyPair = Signed.reconstruct(res.signingPublicKey, res.shards);
+    const reconst = Signed.reconstruct(res.signingPublicKey, res.shards);
 
     // decrypt local secret
-    expect(sealedbox.open(sb, keyPair.publicKey, keyPair.secretKey)).toEqual(secretPayload);
+    expect(sealedbox.open(sb, reconst.encryptionKeyPair.publicKey, reconst.encryptionKeyPair.secretKey)).toEqual(secretPayload);
   });
 
   describe('shard tests', () => {

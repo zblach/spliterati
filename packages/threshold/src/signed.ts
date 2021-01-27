@@ -1,8 +1,7 @@
-/* eslint-disable max-classes-per-file */
 import * as nacl from 'tweetnacl';
-import { Slicer, Uint8ArrayEqual } from '@spliterati/utils/src/util';
-import { uint8 } from '@spliterati/uint8/src/uint8';
-import { Shamir } from '@spliterati/shamir/src/shamir';
+import { Slicer, Uint8ArrayEqual } from '@spliterati/utils';
+import type { uint8 } from '@spliterati/uint8';
+import { Shamir } from '@spliterati/shamir';
 
 /**
  * The 'Signed' module wraps the Shamir library. It generates a random ed25519 keypair, and signs the shares with
@@ -27,10 +26,10 @@ export module Signed {
      * @param share - the contents of this particular share
      */
     constructor(
-          readonly keyID: Uint8Array,
-          readonly t: uint8,
-          readonly n: uint8,
-          readonly share: Uint8Array,
+      public readonly keyID: Uint8Array,
+      public readonly t: uint8,
+      public readonly n: uint8,
+      public readonly share: Uint8Array,
     ) {
       if (keyID.length !== Shard.KEYID_LENGTH) {
         throw new SyntaxError('invalid keyID size');
@@ -56,42 +55,44 @@ export module Signed {
 
       return new Shard(
         slicer.next(Shard.KEYID_LENGTH),
-        <uint8>slicer.next(),
-        <uint8>slicer.next(),
-        slicer.next('end'),
+          <uint8>slicer.next(),
+          <uint8>slicer.next(),
+          slicer.next('end'),
       );
     }
 
     metadataEqual(that: Shard) : boolean {
       return this.n === that.n
-              && this.t === that.t
-              && Uint8ArrayEqual(this.keyID, that.keyID);
+          && this.t === that.t
+          && Uint8ArrayEqual(this.keyID, that.keyID);
     }
   }
 
   /**
-   * generate generates an ed25519 keypair, splits the private key via T of N shamir secret sharing, signs each share
-   * (and the provided message) with that private key, and returns the public key, signed shards, and signed message.
+   * generate generates an ephemeral X25519 keypair for signing, and ed25519 keypair for encryption. It then splits the
+   * ed25519 private key via T of N shamir sharing, and signs those shards with the X25519 private key. Both public keys
+   * and the shares are returned.
    *
    * @param t - the minimum number of shards required to reassemble the private key.
    * @param n - the total number of shards generated for this key.
-   * @param opts - optional additional arguments.
-   *   @option message - an arbitrary message to sign with the generated private key.
-   *   @option keyID - use this keyid (len = KEYID_LENGTH) instead of a randomly-generated one.
+   * @param opts - additional optional arguments:
+   *   @option message - an arbitrary message to sign with the generated X25519 private key too.
+   *   @option keyID - use this keyID (len = KEYID_LENGTH) instead of a randomly-generated one.
    *
-   * @returns{
-   *   publicKey - a generated ed25519 public key
+   * @returns {
+   *   signingPublicKey - a generated X25519 public key, where the private key was used to sign the shards and discarded
+   *   encryptionPublicKey - a generated ed25519
    *   keyID - the key identifier
    *   shards[n] - share + key and split metadata, each signed with the generated ed25519 key.
    *   signedMessage? - message, signed with the generated ed25519 private key.
    * }
    */
   export function generate(t: uint8, n: uint8, opts: {message?:Uint8Array, keyID?:Uint8Array} = {}): {
-      signingPublicKey: Uint8Array,
-      encryptionPublicKey: Uint8Array,
-      keyID: Uint8Array,
-      shards: Uint8Array[],
-      signedMessage: Uint8Array | null,
+    signingPublicKey: Uint8Array,
+    encryptionPublicKey: Uint8Array,
+    keyID: Uint8Array,
+    shards: Uint8Array[],
+    signedMessage: Uint8Array | null,
   } {
     const signingKeys = nacl.sign.keyPair();
     const encryptionKeys = nacl.box.keyPair();
@@ -127,13 +128,20 @@ export module Signed {
   }
 
   /**
-   * reconstruct reconstructs the private key from the given shards
+   * reconstruct performs the opposite operation of the generate function. Given the X25519 public key, and the shards
+   * generated above, it validates the shards and then uses them to reassemble the ed25519 keypair.
    *
-   * @param signingPublicKey - public key used to validate the signatures of the generated shards.
+   * @param signingPublicKey - public key used to validate the signatures of the shards.
    * @param shards - 2..n of the shards generated previously.
-   * @return nacl.BoxKeyPair - the key pair produced by re-assembling the input shards.
+   * @returns {
+   *   keyID - the identifier of this keypair
+   *   nacl.BoxKeyPair - the key pair produced by re-assembling the input shards.
+   * }
    */
-  export function reconstruct(signingPublicKey: Uint8Array, shards: Uint8Array[]): nacl.BoxKeyPair {
+  export function reconstruct(signingPublicKey: Uint8Array, shards: Uint8Array[]): {
+    keyID: Uint8Array
+    encryptionKeyPair: nacl.BoxKeyPair
+  } {
     if (shards.length < 2) {
       throw new SyntaxError('2 or more shards are required for reassembly');
     }
@@ -166,6 +174,9 @@ export module Signed {
       shares.push(shard.share);
     });
 
-    return nacl.box.keyPair.fromSecretKey(Shamir.combine(shares));
+    return {
+      keyID: firstShard.keyID,
+      encryptionKeyPair: nacl.box.keyPair.fromSecretKey(Shamir.combine(shares)),
+    };
   }
 }
