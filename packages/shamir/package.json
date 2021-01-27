@@ -1,8 +1,9 @@
 {
   "name": "@spliterati/shamir",
-  "version": "0.3.3-alpha.6",
+  "version": "0.3.3-alpha.5",
   "description": "Arbitrary-length shamir implementation",
   "private": false,
+  "main": "dist/bundle.js",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
