@@ -1,11 +1,12 @@
 {
   "name": "@spliterati/uint8",
   "type": "commonjs",
+  "private": false,
   "exports": {
     "./": "./src/"
   },
   "main": "./src/uint8.ts",
-  "version": "1.0.3-alpha.1",
+  "version": "1.0.3-alpha.2",
   "description": "A uint8 type definition",
   "keywords": [
     "uint8"
@@ -20,5 +21,5 @@
   "bugs": {
     "url": "https://github.com/zblach/spliterati/issues"
   },
-  "gitHead": "aecd73abb6a1650762b2e8be313c76d1cf24e30d"
+  "gitHead": "49f153568c4aaa345c1d86ce9d14b5fc4086ee44"
 }

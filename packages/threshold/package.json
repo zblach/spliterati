@@ -1,11 +1,12 @@
 {
+  "name": "@spliterati/threshold",
+  "version": "0.2.2-alpha.2",
+  "private": false,
+  "description": "Generate a threshold-protected keypair",
   "type": "commonjs",
   "exports": {
     "./": "./src/"
   },
-  "name": "@spliterati/threshold",
-  "version": "0.2.2-alpha.1",
-  "description": "Generate a threshold-protected keypair",
   "author": "Zak Blacher",
   "homepage": "https://github.com/zblach/spliterati",
   "license": "Unlicense",
@@ -13,9 +14,9 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@spliterati/shamir": "^0.3.2-alpha.1",
-    "@spliterati/uint8": "^1.0.3-alpha.1",
-    "@spliterati/utils": "^0.2.2-alpha.1",
+    "@spliterati/shamir": "^0.3.2-alpha.2",
+    "@spliterati/uint8": "^1.0.3-alpha.2",
+    "@spliterati/utils": "^0.2.2-alpha.2",
     "tweetnacl": "^1.0.3",
     "tweetnacl-sealedbox-js": "^1.2.0"
   },
@@ -23,5 +24,5 @@
     "eslint": "^7.18.0",
     "eslint-plugin-jest": "^24.1.3"
   },
-  "gitHead": "aecd73abb6a1650762b2e8be313c76d1cf24e30d"
+  "gitHead": "49f153568c4aaa345c1d86ce9d14b5fc4086ee44"
 }
