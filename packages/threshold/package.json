@@ -11,8 +11,8 @@
   "author": "Zak Blacher",
   "homepage": "https://github.com/zblach/spliterati",
   "license": "Unlicense",
-  "main": "./dist/threshold.js",
-  "types": "./dist/threshold.d.ts",
+  "main": "./dist/signed.js",
+  "types": "./dist/signed.d.ts",
   "files": [
     "dist"
   ],

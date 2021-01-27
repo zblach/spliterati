@@ -1,15 +1,12 @@
 {
-	"baseUrl": "./packages",
 	"compilerOptions": {
 		"declaration": true,
-		"rootDir": ".",
-		"outDir": "./dist",
 		"plugins": [
 			{
 				"name": "@babel/plugin-syntax-jsx"
 			}
 		],
-		"target": "esnext",
+		"target": "es2020",
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
 		"strict": true,
@@ -39,7 +36,7 @@
 		"baseUrl": "packages",
 		"paths": {
 			"@spliterati/*" : [
-				"*/src/"
+				"*/dist"
 			]
 		}
 	},

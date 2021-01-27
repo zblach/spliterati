@@ -14,7 +14,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "build": "tsc -b",
+    "build": "lerna run build",
     "lint": "lerna exec -- eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "author": "Zak Blacher",
