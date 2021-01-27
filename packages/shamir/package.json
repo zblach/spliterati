@@ -11,7 +11,7 @@
   "exports": {
     ".": "./src/shamir.ts"
   },
-  "main": "./src/shamir.ts",
+  "main": "./dist/bundle.js",
   "keywords": [
     "shamir",
     "secret",
