@@ -1,6 +1,6 @@
 {
   "name": "@spliterati/shamir",
-  "version": "0.3.3-alpha.0",
+  "version": "0.3.3-alpha.1",
   "description": "Arbitrary-length shamir implementation",
   "private": false,
   "publishConfig": {

@@ -1,6 +1,6 @@
 {
   "name": "@spliterati/threshold",
-  "version": "0.2.3-alpha.0",
+  "version": "0.2.3-alpha.1",
   "private": false,
   "publishConfig": {
     "access": "public",
@@ -18,7 +18,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@spliterati/shamir": "^0.3.3-alpha.0",
+    "@spliterati/shamir": "^0.3.3-alpha.1",
     "@spliterati/uint8": "^1.0.4-alpha.0",
     "@spliterati/utils": "^0.2.3-alpha.0",
     "tweetnacl": "^1.0.3",
