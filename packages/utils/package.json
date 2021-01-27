@@ -5,7 +5,7 @@
   },
   "main": "./src/util.ts",
   "name": "@spliterati/utils",
-  "version": "0.2.3-alpha.1",
+  "version": "0.2.3-alpha.2",
   "private": false,
   "publishConfig": {
     "access": "public",
