@@ -16,15 +16,14 @@
   "author": "Zak Blacher <zblach@github>",
   "homepage": "https://github.com/zblach/spliterati",
   "license": "MIT",
-  "publishConfig": {
-    "type": "git",
-    "url": "git+https://github.com/zblach/spliterati.git"
-  },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/zblach/spliterati/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
   },
   "dependencies": {
     "@spliterati/uint8": "^1.0.0",
