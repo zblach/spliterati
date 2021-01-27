@@ -9,6 +9,10 @@
     "packages/*"
   ],
   "private": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build": "tsc -b",
     "lint": "lerna exec -- eslint . --ext .js,.jsx,.ts,.tsx"

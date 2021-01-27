@@ -7,6 +7,10 @@
   "name": "@spliterati/utils",
   "version": "0.2.2-alpha.3",
   "private": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "description": "Assorted utility functions for these packages.",
   "keywords": [
     "misc"
@@ -24,5 +28,5 @@
   "bugs": {
     "url": "https://github.com/zblach/spliterati/issues"
   },
-  "gitHead": "49f153568c4aaa345c1d86ce9d14b5fc4086ee44"
+  "gitHead": "c60cd0f0c2003505a5086d66a0e3b098ed043566"
 }
