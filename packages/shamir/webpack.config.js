@@ -10,10 +10,9 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js'],
     plugins: [new TsconfigPathsPlugin()],
     fallback: {
-      buffer: require.resolve('buffer/'),
+      buffer: false,
       crypto: false,
-      // crypto: require.resolve('crypto-browserify'),
-      stream: require.resolve('stream-browserify'),
+      stream: false,
     },
   },
   module: {

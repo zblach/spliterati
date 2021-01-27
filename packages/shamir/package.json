@@ -8,10 +8,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "type": "commonjs",
-  "exports": {
-    ".": "./src/shamir.ts"
-  },
-  "main": "./dist/bundle.js",
   "keywords": [
     "shamir",
     "secret",
@@ -32,9 +28,6 @@
     "@spliterati/uint8": "^1.0.4-alpha.2",
     "@spliterati/utils": "^0.2.3-alpha.2",
     "@types/node": "^14.14.20",
-    "buffer": "^6.0.3",
-    "crypto-browserify": "^3.12.0",
-    "stream-browserify": "^3.0.0",
     "webpack": "^5.18.0",
     "webpack-cli": "^4.4.0"
   },
