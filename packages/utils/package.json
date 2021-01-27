@@ -5,7 +5,7 @@
   },
   "main": "./src/util.ts",
   "name": "@spliterati/utils",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Assorted utility functions for these packages.",
   "keywords": [
     "misc"

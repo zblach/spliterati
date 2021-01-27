@@ -5,7 +5,7 @@
     "./": "./src/"
   },
   "main": "./src/uint8.ts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A uint8 type definition",
   "keywords": [
     "uint8"
