@@ -3,11 +3,11 @@
   "version": "0.3.3-alpha.10",
   "description": "Arbitrary-length shamir implementation",
   "private": false,
-  "main": "./src/shamir.ts",
+  "main": "./dist/shamir.js",
   "types": "./dist/shamir.d.ts",
-  "exports": {
-    ".": "./src/shamir.ts"
-  },
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"

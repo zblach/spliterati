@@ -8,11 +8,11 @@
   },
   "description": "Generate a threshold-protected keypair",
   "type": "commonjs",
-  "exports": {
-    ".": "./src/signed.ts"
-  },
-  "main": "./src/signed.ts",
+  "main": "./dist/signed.js",
   "types": "./dist/signed.d.ts",
+  "files": [
+    "dist"
+  ],
   "author": "Zak Blacher",
   "homepage": "https://github.com/zblach/spliterati",
   "license": "Unlicense",

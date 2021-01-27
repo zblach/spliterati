@@ -1,10 +1,10 @@
 {
   "type": "commonjs",
-  "exports": {
-    ".": "./src/util.ts"
-  },
-  "main": "./src/util.ts",
+  "main": "./dist/util.js",
   "types": "./dist/util.d.js",
+  "files": [
+    "dist"
+  ],
   "name": "@spliterati/utils",
   "version": "0.2.3-alpha.4",
   "private": false,

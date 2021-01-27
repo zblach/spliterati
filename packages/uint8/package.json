@@ -6,11 +6,11 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "exports": {
-    ".": "./src/uint8.ts"
-  },
-  "main": "./src/uint8.ts",
+  "main": "./dist/uint8.js",
   "types": "./dist/uint8.d.ts",
+  "files": [
+    "dist"
+  ],
   "version": "1.0.4-alpha.4",
   "description": "A uint8 type definition",
   "keywords": [
