@@ -9,9 +9,6 @@
   "author": "Zak Blacher",
   "homepage": "https://github.com/zblach/spliterati",
   "license": "Unlicense",
-  "publishConfig": {
-    "registry": "https://registry.yarnpkg.com"
-  },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
@@ -25,5 +22,6 @@
   "devDependencies": {
     "eslint": "^7.18.0",
     "eslint-plugin-jest": "^24.1.3"
-  }
+  },
+  "gitHead": "35742f79f1de1db301bd87aa46dd26ef95219d83"
 }

@@ -22,9 +22,6 @@
   "bugs": {
     "url": "https://github.com/zblach/spliterati/issues"
   },
-  "publishConfig": {
-    "registry": "https://registry.yarnpkg.com"
-  },
   "dependencies": {
     "@spliterati/uint8": "^1.0.3-alpha.0",
     "@spliterati/utils": "^0.2.2-alpha.0",
@@ -43,5 +40,6 @@
     "lerna": "^3.22.1",
     "ts-jest": "^26.4.4",
     "tweetnacl-sealedbox-js": "^1.2.0"
-  }
+  },
+  "gitHead": "35742f79f1de1db301bd87aa46dd26ef95219d83"
 }

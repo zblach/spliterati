@@ -13,14 +13,12 @@
   "author": "Zak Blacher <zblach@github>",
   "homepage": "https://github.com/zblach/spliterati",
   "license": "MIT",
-  "publishConfig": {
-    "registry": "https://registry.yarnpkg.com"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zblach/spliterati.git"
   },
   "bugs": {
     "url": "https://github.com/zblach/spliterati/issues"
-  }
+  },
+  "gitHead": "35742f79f1de1db301bd87aa46dd26ef95219d83"
 }
