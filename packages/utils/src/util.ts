@@ -1,7 +1,7 @@
 import { randomInt } from 'crypto';
 
 /**
- * Checks to see if two Uint8Arrays have the same contents
+ * Checks to see if two Uint8Arrays have the same contents.
  *
  * @param a - the first Uint8Array
  * @param b - the second Uint8Array

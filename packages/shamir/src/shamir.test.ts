@@ -5,6 +5,7 @@ import { GF2p8, Shamir } from './shamir';
 
 describe.skip('iterative roundtrip', () => {
   return; // remove to run these tests -- `describe.skip` will still generate skipped output for ${TEST_COUNT} cases.
+  // eslint-disable-next-line no-unreachable
   const TEST_COUNT = 5000;
   const iter = (k: uint8, t: uint8, n: uint8) => () => {
     const secret = Uint8Array.from(randomBytes(randomInt(1, 64)));
@@ -13,6 +14,7 @@ describe.skip('iterative roundtrip', () => {
     const recombine = Shamir.combine(takeNRandom(k, shares));
     expect(secret).toEqual(recombine);
   };
+  // eslint-disable-next-line no-unreachable
   for (let i = 0; i < TEST_COUNT; i++) {
     const t = <uint8>randomInt(2, 254);
     const n = <uint8>randomInt(t, 255);

@@ -24,7 +24,8 @@ describe('test', () => {
     const reconst = Signed.reconstruct(res.signingPublicKey, res.shards);
 
     // decrypt local secret
-    expect(sealedbox.open(sb, reconst.encryptionKeyPair.publicKey, reconst.encryptionKeyPair.secretKey)).toEqual(secretPayload);
+    expect(sealedbox.open(sb, reconst.encryptionKeyPair.publicKey, reconst.encryptionKeyPair.secretKey))
+      .toEqual(secretPayload);
   });
 
   describe('shard tests', () => {

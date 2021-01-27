@@ -18,9 +18,12 @@
   "dependencies": {
     "@spliterati/shamir": "^0.2.1",
     "@spliterati/uint8": "^1.0.0",
-    "tweetnacl": "^1.0.3"
+    "@spliterati/utils": "^0.1.0",
+    "tweetnacl": "^1.0.3",
+    "tweetnacl-sealedbox-js": "^1.2.0"
   },
   "devDependencies": {
-    "tweetnacl-sealedbox-js": "^1.2.0"
+    "eslint": "^7.18.0",
+    "eslint-plugin-jest": "^24.1.3"
   }
 }

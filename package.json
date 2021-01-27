@@ -10,8 +10,7 @@
   ],
   "private": true,
   "scripts": {
-    "build": "lerna run build",
-    "test": "lerna run jest",
+    "build": "tsc -b",
     "lint": "lerna exec -- eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "author": "Zak Blacher",

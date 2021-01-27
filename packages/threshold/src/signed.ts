@@ -1,3 +1,4 @@
+// eslint-disable-next-line max-classes-per-file
 import * as nacl from 'tweetnacl';
 import { Slicer, Uint8ArrayEqual } from '@spliterati/utils';
 import type { uint8 } from '@spliterati/uint8';

@@ -2,6 +2,7 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   roots: [
-      'packages/'
-  ]
+    'packages/',
+  ],
+  injectGlobals: true,
 };

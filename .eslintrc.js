@@ -2,6 +2,7 @@ module.exports = {
   env: {
     es2021: true,
     node: true,
+    jest: true,
   },
   extends: [
     'airbnb-base',
@@ -27,7 +28,7 @@ module.exports = {
     },
   },
   plugins: [
-    '@typescript-eslint', 'import', 'prettier',
+    '@typescript-eslint', 'import',
   ],
   rules: {
     eqeqeq: 'off',
