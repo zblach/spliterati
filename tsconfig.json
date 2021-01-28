@@ -38,10 +38,8 @@
 				"*/dist"
 			]
 		},
-		"rootDir": "./src",
-		"outDir": "./dist",
-		"declarationDir": "./dist",
-		"skipLibCheck": true
+		"skipLibCheck": true,
+		"skipDefaultLibCheck": true
 	},
 	"exclude": [
 		"node_modules"

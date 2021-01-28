@@ -1,5 +1,5 @@
 import { randomBytes, randomInt } from 'crypto';
-import { uint8 } from '@spliterati/uint8';
+import type { uint8 } from '@spliterati/uint8';
 import takeNRandom from '@spliterati/utils';
 import { GF2p8, Shamir } from './shamir';
 
