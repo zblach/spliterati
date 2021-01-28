@@ -17,8 +17,12 @@ module.exports = {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     },
-
   },
+  ignorePatterns: [
+      "node_modules",
+      "dist",
+      "**/*.d.ts"
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 12,
