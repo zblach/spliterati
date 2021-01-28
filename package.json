@@ -14,7 +14,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "build": "lerna run build --concurrency 1",
+    "build": "lerna run build",
+    "clean": "for d in packages/*/ ; do (cd \"$d\" && rm -rf dist ; rm tsconfig.tsbuildinfo || true) ; done",
     "lint": "lerna exec -- eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "author": "Zak Blacher",

@@ -27,7 +27,7 @@
     "url": "https://github.com/zblach/spliterati/issues"
   },
   "scripts": {
-    "build": "rm -rf ./dist && tsc"
+    "build": "tsc"
   },
   "gitHead": "87272945e0d91ead29701e0e777eee99ce58e10b",
   "devDependencies": {

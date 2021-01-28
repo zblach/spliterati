@@ -15,4 +15,5 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install --dev
+      - run: yarn build
       - run: yarn jest

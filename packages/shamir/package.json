@@ -24,7 +24,7 @@
   "license": "MIT",
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "build": "rm -rf ./dist && tsc"
+    "build": "tsc"
   },
   "bugs": {
     "url": "https://github.com/zblach/spliterati/issues"

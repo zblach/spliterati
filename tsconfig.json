@@ -44,9 +44,9 @@
 		"node_modules"
 	],
 	"references": [
-		{"path":  "packages/shamir"},
-		{"path":  "packages/threshold"},
-		{"path":  "packages/uint8"},
-		{"path":  "packages/utils"}
+		{"path": "packages/shamir"},
+		{"path": "packages/threshold"},
+		{"path": "packages/uint8"},
+		{"path": "packages/utils"}
 	],
 }
