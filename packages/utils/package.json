@@ -35,6 +35,7 @@
     "ts-loader": "^8.0.14"
   },
   "dependencies": {
+    "random-js": "^2.1.0",
     "tweetnacl": "^1.0.3"
   }
 }
