@@ -1,6 +1,6 @@
 {
   "name": "@spliterati/shamir",
-  "version": "0.3.3-beta.3",
+  "version": "0.4.0",
   "description": "Arbitrary-length shamir implementation",
   "private": false,
   "main": "./dist/shamir.js",
@@ -30,8 +30,8 @@
     "url": "https://github.com/zblach/spliterati/issues"
   },
   "dependencies": {
-    "@spliterati/uint8": "^1.0.4-beta.1",
-    "@spliterati/utils": "^0.2.3-beta.2",
+    "@spliterati/uint8": "^1.0.4",
+    "@spliterati/utils": "^0.3.0",
     "@types/node": "^14.14.20"
   },
   "devDependencies": {
