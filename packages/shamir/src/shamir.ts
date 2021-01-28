@@ -1,8 +1,26 @@
 import { randomBytes } from 'crypto';
 import type { uint8 } from '@spliterati/uint8';
 import takeNRandom from '@spliterati/utils';
+// import { compare_ints, select_ints } from 'constant-time-js';
+/* Note: The packaging for `constant-time-js` is currently a bit problematic with this package setup, but I'm leaving
+these functions in for now so that, when fixed, we can just drop in the replacements.
+ */
+
 // eslint-disable-next-line camelcase
-import { compare_ints, select_ints } from 'constant-time-js';
+function compare_ints(a: number, b: number): number {
+  if (a === b) {
+    return 0;
+  }
+  if (a > b) {
+    return -1;
+  }
+  return 1;
+}
+
+// eslint-disable-next-line camelcase
+function select_ints(cond: number, a: number, b: number): number {
+  return (cond !== 0) ? a : b;
+}
 
 /**
  * Operations over a Galois field of 2^8
