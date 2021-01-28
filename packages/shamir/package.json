@@ -1,6 +1,6 @@
 {
   "name": "@spliterati/shamir",
-  "version": "0.3.3-alpha.10",
+  "version": "0.3.3-beta.0",
   "description": "Arbitrary-length shamir implementation",
   "private": false,
   "main": "./dist/shamir.js",
