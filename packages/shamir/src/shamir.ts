@@ -87,8 +87,8 @@ export module GF2p8 {
     const sum = (logTable[a] + logTable[b]) % (FIELD - 1);
 
     let ret : uint8 = expTable[sum];
-    ret = <uint8>select_ints(compare_ints(a, 0), 0, ret);
-    ret = <uint8>select_ints(compare_ints(b, 0), 0, ret);
+    ret = <uint8>select_ints(compare_ints(0, a), ret, 0);
+    ret = <uint8>select_ints(compare_ints(0, b), ret, 0);
     return ret;
   };
 
@@ -101,7 +101,7 @@ export module GF2p8 {
     const diff = ((logTable[a] - logTable[b]) + fm1) % fm1;
 
     let ret : uint8 = expTable[diff];
-    ret = <uint8>select_ints(compare_ints(a, 0), 0, ret);
+    ret = <uint8>select_ints(compare_ints(a, 0), ret, 0);
     return ret;
   };
 

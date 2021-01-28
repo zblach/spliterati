@@ -9,7 +9,8 @@
     "skipDefaultLibCheck": true,
 
     "allowUnusedLabels": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "noUnusedLocals": false
   },
   "include": [
     "./src/**/*",
