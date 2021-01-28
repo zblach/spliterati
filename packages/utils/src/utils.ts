@@ -1,4 +1,6 @@
-import { randomInt } from 'crypto';
+import { Random } from 'random-js';
+
+const random = new Random();
 
 /**
  * Checks to see if two Uint8Arrays have the same contents.
@@ -83,13 +85,10 @@ export default function takeNRandom<T>(n: number, elements: T[]): T[] {
     case 0:
       return [];
     case 1:
-      return [elements[randomInt(elements.length)]];
+      return [elements[random.integer(0, elements.length)]];
     default:
   }
-  const shuf: T[] = [...elements];
-  for (let i = shuf.length - 1; i > 0; i--) {
-    const j = randomInt(0, i + 1);
-    [shuf[i], shuf[j]] = [shuf[j], shuf[i]];
-  }
+
+  const shuf: T[] = random.shuffle([...elements]);
   return shuf.slice(0, n);
 }
