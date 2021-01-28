@@ -15,7 +15,7 @@
   },
   "scripts": {
     "build": "lerna run build",
-    "clean": "for d in packages/*/ ; do (cd \"$d\" && rm -rf dist ; rm tsconfig.tsbuildinfo || true) ; done",
+    "clean": "find packages/ -type f -name tsconfig.tsbuildinfo -delete",
     "lint": "lerna exec -- eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "author": "Zak Blacher",

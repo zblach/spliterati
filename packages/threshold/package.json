@@ -30,7 +30,7 @@
   "devDependencies": {
     "eslint": "^7.18.0",
     "eslint-plugin-jest": "^24.1.3",
-    "ts-loader": "^8.0.14"
+    "ts-jest": "^26.4.4"
   },
   "gitHead": "87272945e0d91ead29701e0e777eee99ce58e10b"
 }
