@@ -1,5 +1,5 @@
 {
-  "type": "module",
+  "type": "commonjs",
   "main": "./dist/utils.js",
   "types": "./dist/utils.d.ts",
   "files": [
