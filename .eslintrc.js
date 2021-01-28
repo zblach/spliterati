@@ -19,9 +19,9 @@ module.exports = {
     },
   },
   ignorePatterns: [
-      "node_modules",
-      "dist",
-      "**/*.d.ts"
+    'node_modules',
+    'dist',
+    '**/*.d.ts',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
