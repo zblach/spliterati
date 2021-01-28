@@ -11,7 +11,6 @@ This package contains implementations and wrappers around secret sharing impleme
 - Pedersen Shares
 - Others
 
-
 # Usage
 
 Provided without warranty. Accepting pull requests.
