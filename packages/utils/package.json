@@ -6,7 +6,7 @@
     "dist"
   ],
   "name": "@spliterati/utils",
-  "version": "0.2.3-beta.2",
+  "version": "0.2.3-beta.3",
   "private": false,
   "publishConfig": {
     "access": "public",
