@@ -24,7 +24,6 @@
 		"moduleResolution": "node",
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
-		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
@@ -38,7 +37,11 @@
 			"@spliterati/*" : [
 				"*/dist"
 			]
-		}
+		},
+		"rootDir": "./src",
+		"outDir": "./dist",
+		"declarationDir": "./dist",
+		"skipLibCheck": true
 	},
 	"exclude": [
 		"node_modules"
