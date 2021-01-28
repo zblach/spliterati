@@ -4,3 +4,5 @@ dist
 .idea
 
 **/*/tsconfig.tsbuildinfo
+.tool-vesions
+

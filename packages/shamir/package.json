@@ -36,6 +36,7 @@
     "constant-time-js": "^0.3.0"
   },
   "devDependencies": {
+    "ts-jest": "^26.4.4",
     "tweetnacl-sealedbox-js": "^1.2.0"
   },
   "gitHead": "87272945e0d91ead29701e0e777eee99ce58e10b"
