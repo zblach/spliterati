@@ -32,9 +32,6 @@
   },
   "gitHead": "87272945e0d91ead29701e0e777eee99ce58e10b",
   "devDependencies": {
-    "ts-loader": "^8.0.14"
-  },
-  "dependencies": {
-    "tweetnacl": "^1.0.3"
+    "ts-jest": "^26.4.4"
   }
 }
