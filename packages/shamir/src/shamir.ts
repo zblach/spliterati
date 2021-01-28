@@ -1,6 +1,6 @@
 import { randomBytes } from 'crypto';
-import { uint8 } from '../../uint8/src/uint8';
-import takeNRandom from '../../utils/src/util';
+import { uint8 } from '@spliterati/uint8';
+import takeNRandom from '@spliterati/utils';
 
 /**
  * Operations over a Galois field of 2^8
@@ -196,7 +196,7 @@ export module Shamir {
     if (data.length === 0) {
       throw new SyntaxError('data required for split');
     }
-    if (n >= GF2p8.FIELD) {
+    if (n >= GF2p8.FIELD - 1) {
       throw new SyntaxError('too many shares for this field');
     }
 

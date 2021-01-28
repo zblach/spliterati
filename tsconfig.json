@@ -1,9 +1,6 @@
 {
-	"baseUrl": "./packages",
 	"compilerOptions": {
 		"declaration": true,
-		"rootDir": ".",
-		"outDir": "./dist",
 		"plugins": [
 			{
 				"name": "@babel/plugin-syntax-jsx"
@@ -23,7 +20,7 @@
 		"noUnusedParameters": true,
 		"noImplicitReturns": true,
 		"noFallthroughCasesInSwitch": true,
-		"module": "esnext",
+		"module": "commonjs",
 		"moduleResolution": "node",
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
@@ -39,21 +36,17 @@
 		"baseUrl": "packages",
 		"paths": {
 			"@spliterati/*" : [
-				"*/src/"
+				"*/dist"
 			]
 		}
 	},
-	"include": [
-		"packages/*/src/**/*",
-	],
 	"exclude": [
-		"dist",
 		"node_modules"
 	],
 	"references": [
-		{"path":  "packages/shamir"},
-		{"path":  "packages/threshold"},
-		{"path":  "packages/uint8"},
-		{"path":  "packages/utils"}
+		{"path": "packages/shamir"},
+		{"path": "packages/threshold"},
+		{"path": "packages/uint8"},
+		{"path": "packages/utils"}
 	],
 }

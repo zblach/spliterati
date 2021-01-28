@@ -1,5 +1,5 @@
 {
-  "name": "@spliterati/monorepo",
+  "name": "spliterati",
   "version": "independent",
   "main": "index.js",
   "repository": {
@@ -9,9 +9,13 @@
     "packages/*"
   ],
   "private": true,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build": "lerna run build",
-    "test": "lerna run jest",
+    "clean": "for d in packages/*/ ; do (cd \"$d\" && rm -rf dist ; rm tsconfig.tsbuildinfo || true) ; done",
     "lint": "lerna exec -- eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "author": "Zak Blacher",
@@ -19,6 +23,7 @@
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "^7.12.1",
     "@babel/preset-env": "^7.12.11",
+    "@babel/preset-typescript": "^7.12.7",
     "@types/jest": "^26.0.20",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
