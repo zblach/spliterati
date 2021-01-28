@@ -5,11 +5,17 @@
     "rootDir": "./src",
     "outDir": "./dist",
     "declarationDir": "./dist",
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+
+    "allowUnusedLabels": true,
+    "noImplicitAny": false,
+    "noUnusedLocals": false
   },
   "include": [
     "./src/**/*",
   ],
   "exclude": [
     "./src/**/*.test.ts",
-  ]
+  ],
 }

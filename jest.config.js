@@ -5,4 +5,7 @@ module.exports = {
     'packages/',
   ],
   injectGlobals: true,
+  transformIgnorePatterns: [
+    '/node_modules/(?!constant-time-js)',
+  ],
 };

@@ -1,6 +1,8 @@
 import { randomBytes } from 'crypto';
-import { uint8 } from '@spliterati/uint8';
+import type { uint8 } from '@spliterati/uint8';
 import takeNRandom from '@spliterati/utils';
+// eslint-disable-next-line camelcase
+import { compare_ints, select_ints } from 'constant-time-js';
 
 /**
  * Operations over a Galois field of 2^8
@@ -82,17 +84,15 @@ export module GF2p8 {
   const add = (a: uint8, b: uint8): uint8 => <uint8>(a ^ b);
 
   const mul = (a: uint8, b: uint8): uint8 => {
-    if (a === 0 || b === 0) {
-      return 0;
-    }
     const sum = (logTable[a] + logTable[b]) % (FIELD - 1);
-    return expTable[sum];
+
+    let ret : uint8 = expTable[sum];
+    ret = <uint8>select_ints(compare_ints(0, a), ret, 0);
+    ret = <uint8>select_ints(compare_ints(0, b), ret, 0);
+    return ret;
   };
 
   const div = (a: uint8, b: uint8): uint8 => {
-    if (a === 0) {
-      return 0;
-    }
     if (b === 0) {
       throw new RangeError('div zero');
     }
@@ -100,7 +100,9 @@ export module GF2p8 {
     const fm1 = FIELD - 1;
     const diff = ((logTable[a] - logTable[b]) + fm1) % fm1;
 
-    return expTable[diff];
+    let ret : uint8 = expTable[diff];
+    ret = <uint8>select_ints(compare_ints(a, 0), ret, 0);
+    return ret;
   };
 
   export class Polynomial {
@@ -210,7 +212,7 @@ export module Shamir {
     }
     data.forEach((val, idx) => {
       const p = new GF2p8.Polynomial(<uint8>val, <uint8>(t - 1));
-      xs.forEach((x, i) => {
+      xs.forEach((x: number, i: number) => {
         out[i][idx] = p.evaluate(<uint8>x);
       });
     });

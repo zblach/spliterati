@@ -8,11 +8,14 @@ import { randomInt } from 'crypto';
  * @return boolean - whether or not they are equal.
  */
 export function Uint8ArrayEqual(a: Uint8Array, b: Uint8Array): boolean {
-  if (a.length != b.length) {
-    return false;
-  }
+  let one : Uint8Array;
+  let two: Uint8Array;
 
-  return a.every((val, i) => b[i] == val);
+  // eslint-disable-next-line prefer-const
+  [one, two] = a.length < b.length ? [a, b] : [b, a];
+
+  // eslint-disable-next-line no-bitwise
+  return one.reduce((bs, val, i) => bs | (two[i] ^ val), a.length ^ b.length) === 0;
 }
 
 interface Sliceable<T> extends ArrayLike<T>{

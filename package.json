@@ -15,7 +15,7 @@
   },
   "scripts": {
     "build": "lerna run build",
-    "clean": "for d in packages/*/ ; do (cd \"$d\" && rm -rf dist ; rm tsconfig.tsbuildinfo || true) ; done",
+    "clean": "find packages/ -type f -name tsconfig.tsbuildinfo -delete",
     "lint": "lerna exec -- eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "author": "Zak Blacher",
@@ -27,7 +27,8 @@
     "@types/jest": "^26.0.20",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
-    "eslint": "^7.17.0",
+    "babel-cli": "^6.26.0",
+    "eslint": "^7.18.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "jest": "^26.6.3",
