@@ -21,7 +21,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@spliterati/shamir": "^0.5.1-alpha.0",
+    "@spliterati/shamir": "0.5.1-alpha.0",
     "@spliterati/uint8": "^1.0.5",
     "@spliterati/utils": "^0.3.2-alpha.0",
     "tweetnacl": "^1.0.3",
