@@ -85,6 +85,5 @@ export default function takeNRandom<T>(n: number, elements: T[]): T[] {
     default:
   }
 
-  const shuf: T[] = random.shuffle([...elements]);
-  return shuf.slice(0, n);
+  return random.sample([...elements], n);
 }
