@@ -3,18 +3,14 @@ import { Random } from 'random-js';
 const random = new Random();
 
 /**
- * Checks to see if two Uint8Arrays have the same contents.
+ * Checks to see if two Uint8Arrays have the same contents. No early termination in the case of inequality.
  *
  * @param a - the first Uint8Array
  * @param b - the second Uint8Array
  * @return boolean - whether or not they are equal.
  */
 export function Uint8ArrayEqual(a: Uint8Array, b: Uint8Array): boolean {
-  let one : Uint8Array;
-  let two: Uint8Array;
-
-  // eslint-disable-next-line prefer-const
-  [one, two] = a.length < b.length ? [a, b] : [b, a];
+  const [one, two] = a.length < b.length ? [a, b] : [b, a];
 
   // eslint-disable-next-line no-bitwise
   return one.reduce((bs, val, i) => bs | (two[i] ^ val), a.length ^ b.length) === 0;

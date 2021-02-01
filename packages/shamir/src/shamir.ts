@@ -1,26 +1,6 @@
 import { randomBytes } from 'crypto';
 import type { uint8 } from '@spliterati/uint8';
 import takeNRandom from '@spliterati/utils';
-// import { compare_ints, select_ints } from 'constant-time-js';
-/* Note: The packaging for `constant-time-js` is currently a bit problematic with this package setup, but I'm leaving
-these functions in for now so that, when fixed, we can just drop in the replacements.
- */
-
-// eslint-disable-next-line camelcase
-function compare_ints(a: number, b: number): number {
-  if (a === b) {
-    return 0;
-  }
-  if (a > b) {
-    return -1;
-  }
-  return 1;
-}
-
-// eslint-disable-next-line camelcase
-function select_ints(cond: number, a: number, b: number): number {
-  return (cond !== 0) ? a : b;
-}
 
 /**
  * Operations over a Galois field of 2^8
@@ -98,16 +78,55 @@ export module GF2p8 {
     0xaa, 0xcd, 0x9a, 0xa0, 0x75, 0x54, 0x0e, 0x01,
   ];
 
+  /**
+   * A simplification of the constant-time check used in mul and div.
+   *
+   * It is equivalent to:
+   *  `cond == 0 ? 0 : value`
+   *
+   * @param cond  - test value
+   * @param value - potential output
+   * @returns 0, if ${cond} == 0, else ${value}
+   */
+  /* eslint-disable no-bitwise */
+  const zeroIfZero = (cond: uint8, value: uint8): uint8 => {
+    let mask : uint8 = cond;
+    mask |= (mask << 4) | (mask >> 4);
+    mask |= (mask << 2) | (mask >> 2);
+    mask |= (mask << 1) | (mask >> 1);
+    /*
+     tl;dr: mask = cond == 0 ? 0 : 0xFF;
+
+     mask = 'abcdefgh' (as bits)
+            // (a | b) == (ab) for compactness, and brackets encapsulate one bit.
+
+     mask = '(ae)(bf)(cg)(dh)(ea)(fb)(gc)(hd)'
+     mask = '(aecg)(bfdh)(cgeaae)(dhfbbf)(eagccg)(fbhddh)(gcea)(hdfb)'
+     mask = '(aecgbfdh)(bfdhcgeaaeaecg)(cgeaaedhfbbfbfdh)(dhfbbfeagccgcgeaae)' +
+            '(eagccgfbhddhdhfbbf)(fbhddhgceaeagccg)(gceahdfbfbhddh)(hdfbgcea)'
+
+            // sorted (ba) == (ab) etc., commutativity.
+         == '(abcdefgh)(aaabccdeeefggh)(aabbbcddeefffghh)(aaabbcccdeeeffgggh)' +
+            '(abbbccdddefffgghhh)(aabcccddeefggghh)(abbcdddeffghhh)(abcdefgh)
+
+            // simplified (aa) == (a) etc., identity.
+         == '(abcdefgh)(abcdefgh)(abcdefgh)(abcdefgh)' +
+            '(abcdefgh)(abcdefgh)(abcdefgh)(abcdefgh)'
+
+         == cond == 0 ? 0 : 0xFF;
+     */
+
+    return <uint8>(mask & 0xFF & value);
+  };
+  /* eslint-enable no-bitwise */
+
   // eslint-disable-next-line no-bitwise
-  const add = (a: uint8, b: uint8): uint8 => <uint8>(a ^ b);
+  const xor = (a: uint8, b: uint8): uint8 => <uint8>(a ^ b);
 
   const mul = (a: uint8, b: uint8): uint8 => {
     const sum = (logTable[a] + logTable[b]) % (FIELD - 1);
 
-    let ret : uint8 = expTable[sum];
-    ret = <uint8>select_ints(compare_ints(0, a), ret, 0);
-    ret = <uint8>select_ints(compare_ints(0, b), ret, 0);
-    return ret;
+    return zeroIfZero(b, zeroIfZero(a, expTable[sum]));
   };
 
   const div = (a: uint8, b: uint8): uint8 => {
@@ -118,9 +137,7 @@ export module GF2p8 {
     const fm1 = FIELD - 1;
     const diff = ((logTable[a] - logTable[b]) + fm1) % fm1;
 
-    let ret : uint8 = expTable[diff];
-    ret = <uint8>select_ints(compare_ints(a, 0), ret, 0);
-    return ret;
+    return zeroIfZero(a, expTable[diff]);
   };
 
   export class Polynomial {
@@ -153,7 +170,7 @@ export module GF2p8 {
       let out = this.coefficients[degree];
 
       for (let i = degree - 1; i >= 0; i--) {
-        out = add(mul(<uint8>out, x), <uint8> this.coefficients[i]);
+        out = xor(mul(<uint8>out, x), <uint8> this.coefficients[i]);
       }
 
       return <uint8>out;
@@ -184,9 +201,9 @@ export module GF2p8 {
             // eslint-disable-next-line no-continue
             continue;
           }
-          basis = mul(basis, div(add(x, <uint8>xs[j]), add(<uint8>xs[i], <uint8>xs[j])));
+          basis = mul(basis, div(xor(x, <uint8>xs[j]), xor(<uint8>xs[i], <uint8>xs[j])));
         }
-        result = add(result, mul(<uint8>ys[i], basis));
+        result = xor(result, mul(<uint8>ys[i], basis));
       }
 
       return result;
