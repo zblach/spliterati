@@ -90,7 +90,7 @@ export module GF2p8 {
    */
   /* eslint-disable no-bitwise */
   const zeroIfZero = (cond: uint8, value: uint8): uint8 => {
-    let mask : uint8 = cond;
+    let mask: uint8 = cond;
     mask |= (mask << 4) | (mask >> 4);
     mask |= (mask << 2) | (mask >> 2);
     mask |= (mask << 1) | (mask >> 1);
@@ -105,9 +105,9 @@ export module GF2p8 {
      mask = '(aecgbfdh)(bfdhcgeaaeaecg)(cgeaaedhfbbfbfdh)(dhfbbfeagccgcgeaae)' +
             '(eagccgfbhddhdhfbbf)(fbhddhgceaeagccg)(gceahdfbfbhddh)(hdfbgcea)'
 
-            // sorted (ba) == (ab) etc., commutativity.
+            // sorted (ba) == (ab) etc., reflexivity.
          == '(abcdefgh)(aaabccdeeefggh)(aabbbcddeefffghh)(aaabbcccdeeeffgggh)' +
-            '(abbbccdddefffgghhh)(aabcccddeefggghh)(abbcdddeffghhh)(abcdefgh)
+            '(abbbccdddefffgghhh)(aabcccddeefggghh)(abbcdddeffghhh)(abcdefgh)'
 
             // simplified (aa) == (a) etc., identity.
          == '(abcdefgh)(abcdefgh)(abcdefgh)(abcdefgh)' +
@@ -116,7 +116,7 @@ export module GF2p8 {
          == cond == 0 ? 0 : 0xFF;
      */
 
-    return <uint8>(mask & 0xFF & value);
+    return <uint8>(mask & value);
   };
   /* eslint-enable no-bitwise */
 
@@ -150,8 +150,7 @@ export module GF2p8 {
      * @param {uint8} degree - the degree of the function
      */
     constructor(intercept: uint8, degree: uint8) {
-      this.coefficients = Uint8Array.of(...randomBytes(degree + 1));
-      this.coefficients[0] = intercept;
+      this.coefficients = Uint8Array.of(intercept, ...randomBytes(degree));
     }
 
     /**
@@ -215,6 +214,7 @@ export module Shamir {
   /**
    * split uses shamir secret sharing to divide the secret ${data} into ${n} parts,
    * requiring ${t} or more to reassemble.
+   *
    * Each share is one byte longer than the provided ${data} value.
    *
    * @param {Uint8Array} data - the secret data to be split
