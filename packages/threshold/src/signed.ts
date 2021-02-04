@@ -44,15 +44,23 @@ export module Signed {
       return Uint8Array.of(...this.keyID, this.t, this.n, ...this.share);
     }
 
-    static unpack(bytes: Uint8Array | null): (Shard | null) {
+    /**
+     * unpack unpacks a shard's metadata from its byte representation.
+     *
+     * @param bytes - the encoded shard
+     * @param isSigned - if the shard is signed, skip the prepended signature when parsing the metadata.
+     */
+    static unpack(bytes: Uint8Array | null, isSigned: boolean = false): (Shard | null) {
       if (!bytes) {
         return null;
       }
-      if (bytes.length < Shard.KEYID_LENGTH + 2) {
+      const bs = isSigned ? bytes.slice(nacl.sign.signatureLength) : bytes;
+
+      if (bs.length < Shard.KEYID_LENGTH + 2) {
         throw new SyntaxError('share invalid -- too short');
       }
 
-      const slicer = new Slicer(bytes);
+      const slicer = new Slicer(bs);
 
       return new Shard(
         slicer.next(Shard.KEYID_LENGTH),
