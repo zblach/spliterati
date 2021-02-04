@@ -8,17 +8,24 @@ const sealedbox = require('tweetnacl-sealedbox-js');
 
 describe('test', () => {
   test('roundtrip', () => {
+    const keyID = Uint8Array.of(...randomBytes(16));
     const secretPayload = Uint8Array.of(...randomBytes(32));
-    const message = Uint8Array.of(...randomBytes(16));
+    const message = Uint8Array.of(...randomBytes(24));
 
     // generate shares
-    const res = Signed.generate(3, 5, { message });
+    const res = Signed.generate(3, 5, { message, keyID });
 
     // validate message
     expect(nacl.sign.open(res.signedMessage!, res.signingPublicKey)).toEqual(message);
 
     // encrypt local secret
     const sb = sealedbox.seal(secretPayload, res.encryptionPublicKey);
+
+    // Validate metadata from signed shard.
+    const shardMeta = Signed.Shard.unpack(res.shards[0], true);
+    expect(shardMeta?.keyID).toEqual(keyID);
+    expect(shardMeta?.t).toEqual(3);
+    expect(shardMeta?.n).toEqual(5);
 
     // reconstruct shares
     const reconst = Signed.reconstruct(res.signingPublicKey, res.shards);
